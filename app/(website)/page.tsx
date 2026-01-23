@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Section } from "@/components/layout/section";
 import { generateMetadata } from "@/utils/metadata";
 import { Link } from "@/components/ui/link";
+import { HeroSection } from "@/sections/mainpage/hero-section";
 import {
   ArrowSquareOut,
   UserCircle,
@@ -32,50 +33,52 @@ export const metadata = generateMetadata({
 export default async function Page() {
   return (
     <>
-      <Section
-        header
-        size="lg"
-        bg="bg.subtle"
-        borderBottom="1px solid"
-        borderColor="border"
-      >
-        <VStack gap="10">
-          <Stack gap="4" textAlign="center">
-            <Heading
-              as="h1"
-              textStyle={{ base: "2xl", md: "5xl" }}
-              maxW={{ md: "lg" }}
-              mx="auto"
-              lineHeight="tighter"
-            >
-              PumpItClub -
-              Deine Transformation startet hier!
-            </Heading>
-
-            <Text color="fg.muted" textStyle="lg" maxW={{ md: "lg" }} mx="auto">
-              Wir bei PumpItClub kümmern uns darum deine Ernährung und dein Fitness auf den besten Stand zu bringen. Ohne das du einschränkungen in deinem Leben hast
-            </Text>
-          </Stack>
-
-          <Stack
-            align="center"
-            direction={{ base: "column", md: "row" }}
-            gap="3"
-          >
-            <Link href="/docs">
-              <Button size="xl">
-                Loslegen <ArrowRight />
-              </Button>
-            </Link>
-            <Link href="https://github.com">
-              <Button variant="ghost" size="xl">
-                GitHub <ArrowSquareOut />
-              </Button>
-            </Link>
-          </Stack>
-        </VStack>
-      </Section>
-      <Section size="lg" bg="bg">
+      <HeroSection
+        heading="Deine Transformation startet hier"
+        subheading="PumpItClub wurde geschaffen, damit du deine Fitnessziele erreichest."
+        pricingOptions={[
+          {
+            title: "Zum Freekurs",
+            description: "Starte jetzt kostenlos und erhalte sofortigen Zugang zu wertvollen Inhalten",
+            features: [
+              "Sofortiger Zugang nach Anmeldung",
+              "Grundlagen-Training & Ernährungstipps",
+              "Community-Zugang",
+              "Erste Schritte zu deiner Transformation",
+            ],
+            buttonText: "Jetzt kostenlos starten",
+            recommended: false,
+          },
+          {
+            title: "Zur 1zu1 Beratung",
+            description: "Erhalte deinen maßgeschneiderten Plan in nur 30 Minuten",
+            features: [
+              "Persönliche Analyse deiner Ziele",
+              "Individueller Trainingsplan",
+              "Maßgeschneiderter Ernährungsplan",
+              "30 Minuten persönliches Coaching",
+              "Follow-up Support",
+            ],
+            buttonText: "Jetzt Beratung buchen",
+            recommended: true,
+          },
+        ]}
+        infoTexts={[
+          {
+            heading: "Individuelles Coaching",
+            content: "Persönliche Betreuung für deine Fitnessziele",
+          },
+          {
+            heading: "Ernährungsplanung",
+            content: "Maßgeschneiderte Pläne für deinen Lifestyle",
+          },
+          {
+            heading: "24/7 Support",
+            content: "Rund um die Uhr Unterstützung bei Fragen",
+          },
+        ]}
+      />
+      <Section size="lg" bg="transparent">
         <VStack gap="12">
           <Stack gap="4" textAlign="center">
             <Heading

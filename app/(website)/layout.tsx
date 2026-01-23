@@ -10,7 +10,7 @@ export default function WebsiteLayout({
   return (
     <>
       <Navbar type="website" />
-      <Box as="main">{children}</Box>
+      <Box as="main" overflowX="hidden" maxW="100vw">{children}</Box>
       <Footer />
     </>
   );

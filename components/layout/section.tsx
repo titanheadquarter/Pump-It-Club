@@ -36,7 +36,8 @@ export const Section = ({ header, size = "md", ...props }: SectionProps) => {
         },
         lg: {
           base: "152px",
-          md: "184px",
+          md: "160px",
+          lg: "140px",
         },
       } as const;
 
@@ -44,11 +45,17 @@ export const Section = ({ header, size = "md", ...props }: SectionProps) => {
     };
 
     return (
-      <Box as="header" w="full" {...rootProps}>
-        <Container maxW={{ base: "full", md: "6xl", lg: "7xl" }}>
+      <Box as="header" w="full" maxW="100vw" overflowX="hidden" {...rootProps}>
+        <Container maxW={{ base: "full", md: "6xl", lg: "7xl" }} w="full" px={{ base: "4", md: "6" }}>
           <Box
-            pt={{ base: topPadding(size).base, md: topPadding(size).md }}
+            pt={{
+              base: topPadding(size).base,
+              md: topPadding(size).md,
+              lg: size === "lg" ? "140px" : topPadding(size).md,
+            }}
             pb={{ base: paddingY[size].base, md: paddingY[size].md }}
+            w="full"
+            overflowX="hidden"
           >
             {props.children}
           </Box>
@@ -57,9 +64,9 @@ export const Section = ({ header, size = "md", ...props }: SectionProps) => {
     );
   }
   return (
-    <Box as="section" w="full" {...rootProps}>
-      <Container maxW={{ base: "full", md: "6xl", lg: "7xl" }}>
-        <Box py={{ base: paddingY[size].base, md: paddingY[size].md }}>
+    <Box as="section" w="full" maxW="100vw" overflowX="hidden" {...rootProps}>
+      <Container maxW={{ base: "full", md: "6xl", lg: "7xl" }} w="full" px={{ base: "4", md: "6" }}>
+        <Box py={{ base: paddingY[size].base, md: paddingY[size].md }} w="full" overflowX="hidden">
           {props.children}
         </Box>
       </Container>

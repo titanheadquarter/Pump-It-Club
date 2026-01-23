@@ -153,27 +153,40 @@ export const Navbar = ({ type }: { type: "website" | "app" }) => {
       position="fixed"
       zIndex="docked"
       top={{ base: "4", md: "6" }}
-      w="full"
+      left="0"
+      right="0"
+      w="100vw"
+      maxW="100vw"
+      px={{ base: "4", md: "6" }}
+      overflowX="hidden"
     >
-      <Container maxW={{ base: "full", md: "3xl" }}>
+      <Container maxW={{ base: "full", md: "3xl" }} w="full" px="0" mx="auto">
         <Box
           w="full"
           px="4"
           py="3"
-          boxShadow="xs"
-          background="bg.panel"
+          boxShadow="0 2px 12px -2px rgba(0, 0, 0, 0.08), 0 4px 24px -4px rgba(0, 0, 0, 0.06), 0 0 0 0.5px rgba(255, 255, 255, 0.05) inset"
+          background="bg.panel/70"
+          backdropFilter="blur(20px) saturate(200%)"
+          border="1px solid"
+          borderColor="border.emphasized/50"
           borderRadius="l3"
+          overflow="hidden"
         >
           <CollapsibleRoot>
-            <HStack gap={{ base: "3", md: "8" }} justify="space-between">
-              <CollapsibleTrigger />
-              <Link href="/">
-                <Logo />
-              </Link>
-              <HStack justify="flex-end" w="full" hideFrom="md">
+            <HStack gap={{ base: "3", md: "8" }} justify="space-between" w="full" overflowX="hidden" minW="0">
+              <Box flexShrink={0}>
+                <CollapsibleTrigger />
+              </Box>
+              <Box flexShrink={0}>
+                <Link href="/">
+                  <Logo />
+                </Link>
+              </Box>
+              <HStack justify="flex-end" w="full" hideFrom="md" flexShrink={0} gap="2" minW="0">
                 <NavbarActionMenu type="app" />
               </HStack>
-              <HStack gap="2" hideBelow="md">
+              <HStack gap="2" hideBelow="md" flexShrink={0} minW="0">
                 <NavbarLinkMenu />
                 <NavbarActionMenu type="app" />
               </HStack>
