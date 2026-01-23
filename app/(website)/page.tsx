@@ -13,6 +13,8 @@ import { Section } from "@/components/layout/section";
 import { generateMetadata } from "@/utils/metadata";
 import { Link } from "@/components/ui/link";
 import { HeroSection } from "@/sections/mainpage/hero-section";
+import { MeetTheFounderSection } from "@/sections/mainpage/meet-the-founder-section";
+import { HandyappSection } from "@/sections/mainpage/handyapp-section";
 import {
   ArrowSquareOut,
   UserCircle,
@@ -45,6 +47,7 @@ export default async function Page() {
               "Grundlagen-Training & Ernährungstipps",
               "Community-Zugang",
               "Erste Schritte zu deiner Transformation",
+              "Sag nein zu Fettleibigkeit",
             ],
             buttonText: "Jetzt kostenlos starten",
             recommended: false,
@@ -78,6 +81,8 @@ export default async function Page() {
           },
         ]}
       />
+      <MeetTheFounderSection />
+      <HandyappSection />
       <Section size="lg" bg="transparent">
         <VStack gap="12">
           <Stack gap="4" textAlign="center">

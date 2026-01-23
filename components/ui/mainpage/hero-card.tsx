@@ -40,34 +40,11 @@ export const HeroCard = ({
     <Box
       position="relative"
       w="full"
+      h="full"
       {...rest}
       overflow="visible"
       pt={recommended ? "2" : undefined}
     >
-      {recommended && (
-        <Box
-          position="absolute"
-          top="-12px"
-          right="0"
-          zIndex={20}
-          pr="2"
-        >
-          <Badge
-            colorPalette="red"
-            variant="solid"
-            px="2.5"
-            py="1"
-            textStyle="xs"
-            fontWeight="600"
-            letterSpacing="0.03em"
-            borderRadius="full"
-            boxShadow="0 1px 4px -1px rgba(0, 0, 0, 0.12)"
-            whiteSpace="nowrap"
-          >
-            EMPFEHLUNG
-          </Badge>
-        </Box>
-      )}
       <Card.Root
         bg="bg.panel/40"
         backdropFilter="blur(20px) saturate(180%)"
@@ -77,12 +54,7 @@ export const HeroCard = ({
             ? "primary.solid/60"
             : "border.emphasized/60"
         }
-        borderWidth={selected ? "1.5px" : "1px"}
-        boxShadow={
-          selected
-            ? "0 2px 12px -2px rgba(0, 0, 0, 0.06), 0 4px 24px -4px rgba(0, 0, 0, 0.04), 0 0 0 0.5px rgba(255, 255, 255, 0.04) inset, 0 0 32px -4px rgba(34, 197, 94, 0.25), 0 0 48px -8px rgba(34, 197, 94, 0.15)"
-            : "0 1px 4px -2px rgba(0, 0, 0, 0.04), 0 0 0 0.5px rgba(255, 255, 255, 0.03) inset"
-        }
+
         borderRadius="l2"
         overflow="hidden"
         transition="all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
@@ -95,21 +67,25 @@ export const HeroCard = ({
           borderColor: selected
             ? "primary.solid/70"
             : "border.emphasized/70",
-          boxShadow: selected
-            ? "0 4px 16px -2px rgba(0, 0, 0, 0.08), 0 6px 32px -4px rgba(0, 0, 0, 0.06), 0 0 0 0.5px rgba(255, 255, 255, 0.05) inset, 0 0 40px -4px rgba(34, 197, 94, 0.3), 0 0 56px -8px rgba(34, 197, 94, 0.2)"
-            : "0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(255, 255, 255, 0.04) inset",
+          boxShadow:
+            selected && highlightGreen
+              ? "0 0 0 0.5px rgba(255, 255, 255, 0.05) inset"
+              : selected
+              ? "0 4px 16px -2px rgba(0, 0, 0, 0.08), 0 6px 32px -4px rgba(0, 0, 0, 0.06), 0 0 0 0.5px rgba(255, 255, 255, 0.05) inset, 0 0 40px -4px rgba(34, 197, 94, 0.3), 0 0 56px -8px rgba(34, 197, 94, 0.2)"
+              : "0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(255, 255, 255, 0.04) inset",
         }}
       >
         <Card.Body 
           py={{ base: "5", md: "6" }} 
-          px={{ base: "5", md: "6" }}
+          px={{ base: "2", md: "3" }}
           flex="1"
           display="flex"
           flexDirection="column"
+          w="full"
         >
-          <VStack gap={{ base: "4", md: "5" }} align="stretch" flex="1">
+          <VStack gap={{ base: "4", md: "5" }} align="stretch" flex="1" w="full">
             {/* Header mit Radio Button */}
-            <HStack gap={{ base: "3", md: "4" }} align="flex-start">
+            <HStack gap={{ base: "3", md: "4" }} align="flex-start" w="full">
               <Box mt="0.5" pointerEvents="none" position="relative" flexShrink={0}>
                 <Circle
                   size={{ base: "4", md: "5" }}
@@ -156,13 +132,14 @@ export const HeroCard = ({
                   )}
                 </Circle>
               </Box>
-              <VStack gap="1" align="flex-start" flex="1">
+              <VStack gap="1" align="flex-start" flex="1" w="full">
                 <Text 
                   fontWeight="600" 
                   textStyle={{ base: "lg", md: "xl" }} 
                   letterSpacing="-0.01em" 
                   color={highlightGreen ? "success.solid" : "fg"}
                   transition="color 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
+                  w="full"
                 >
                   {title}
                 </Text>
@@ -172,6 +149,7 @@ export const HeroCard = ({
                     color="fg.muted" 
                     lineHeight="1.6"
                     opacity={0.85}
+                    w="full"
                   >
                     {description}
                   </Text>
@@ -181,9 +159,9 @@ export const HeroCard = ({
 
             {/* Features Liste */}
             {features.length > 0 && (
-              <VStack gap={{ base: "2.5", md: "3" }} align="stretch" mt={{ base: "2", md: "3" }}>
+              <VStack gap={{ base: "2.5", md: "3" }} align="stretch" mt={{ base: "2", md: "3" }} w="full">
                 {features.map((feature, index) => (
-                  <HStack key={index} gap="2.5" align="flex-start">
+                  <HStack key={index} gap="2.5" align="flex-start" w="full">
                     <Box
                       color={highlightGreen ? "success.solid" : selected ? "primary.solid" : "fg.muted"}
                       mt="0.5"
@@ -197,6 +175,7 @@ export const HeroCard = ({
                       color="fg.muted" 
                       lineHeight="1.6"
                       opacity={0.9}
+                      flex="1"
                     >
                       {feature}
                     </Text>
@@ -208,7 +187,7 @@ export const HeroCard = ({
 
           {/* Button am unteren Rand */}
           {buttonText && (
-            <Box mt={{ base: "5", md: "6" }} pt={{ base: "4", md: "5" }} borderTop="1px solid" borderColor="border.muted/30">
+            <Box mt={{ base: "5", md: "6" }} pt={{ base: "4", md: "5" }} borderTop="1px solid" borderColor="border.muted/30" w="full">
               <Button
                 w="full"
                 size="lg"
