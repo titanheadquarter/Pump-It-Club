@@ -48,12 +48,12 @@ export default async function Page() {
               mx="auto"
               lineHeight="tighter"
             >
-              TitanScale: Die Business-Software für skalierende Experten
+              PumpItClub -
+              Deine Transformation startet hier!
             </Heading>
 
             <Text color="fg.muted" textStyle="lg" maxW={{ md: "lg" }} mx="auto">
-              TitanScale ist eine Business-Software, die Experten dabei hilft,
-              ihr Geschäft zu skalieren und ihre Prozesse zu optimieren.
+              Wir bei PumpItClub kümmern uns darum deine Ernährung und dein Fitness auf den besten Stand zu bringen. Ohne das du einschränkungen in deinem Leben hast
             </Text>
           </Stack>
 
