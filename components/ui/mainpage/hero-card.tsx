@@ -42,8 +42,7 @@ export const HeroCard = ({
       w="full"
       h="full"
       {...rest}
-      overflow="visible"
-      pt={recommended ? "2" : undefined}
+      overflow="hidden"
     >
       <Card.Root
         bg="bg.panel/40"

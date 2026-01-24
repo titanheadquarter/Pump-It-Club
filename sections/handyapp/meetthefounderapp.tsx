@@ -14,7 +14,7 @@ import {
 import { VimeoPlayer } from '@/components/ui/mainpage/vimeo-player'
 import { HeroCard } from '@/components/ui/mainpage/hero-card'
 
-export const HeroSection = ({
+export const MeetTheFounderAppSection = ({
   videoId,
   heading = "Deine Transformation startet JETZT!",
   subheading = "Schluss mit Ausreden. Zeit für echte Veränderung.",
@@ -35,7 +35,7 @@ export const HeroSection = ({
   return (
     <Box
       minH="100vh"
-      bg="linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 25%, #2d3e2d 50%, #4a6741 70%, #e8f5e8 90%, #ffffff 100%)"
+     
       position="relative"
       overflow="hidden"
       pb="0"
@@ -86,7 +86,7 @@ export const HeroSection = ({
                 as="h1"
                 fontSize={{ base: '1.6rem', sm: '2rem', md: '2.4rem', lg: '3rem', xl: '3.5rem' }}
                 fontWeight="900"
-                color="white"
+                color="black"
                 lineHeight="1.1"
                 textAlign="center"
                 letterSpacing="tighter"
@@ -96,10 +96,10 @@ export const HeroSection = ({
                   animation: 'pulseGlow 4s ease-in-out infinite'
                 }}
               >
-                DEINE{' '}
+                Du benötigst{' '}
                 <Text
                   as="span"
-                  color="white"
+                  color="black"
                   position="relative"
                   display="inline-block"
                   css={{
@@ -111,17 +111,17 @@ export const HeroSection = ({
 
                   }}
                 >
-                  TRANSFORMATION
+                  persönliche Unterstützung
                 </Text>
                 <br />
-                STARTET{' '}
+                bei deiner{' '}
                 <Text
                   as="span"
                  
                   display="inline-block"
-                  color="white"
+                  color="black"
                 >
-                  JETZT!
+                  Transformation?
                 </Text>
               </Heading>
 
@@ -129,13 +129,13 @@ export const HeroSection = ({
               <Heading
                 as="h2"
                 fontSize={{ base: 'xs', sm: 'sm', md: 'md' }}
-                color="gray.300"
+                color="black"
                 fontWeight="medium"
                 maxW="2xl"
                 lineHeight="tall"
               >
-                Schluss mit Ausreden. Schluss mit "morgen fange ich an".
-                <Text as="span" fontWeight="bold"> Heute</Text> beginnt dein neues Leben.
+                Dann meld dich bei mir an und lass uns gemeinsam deine Transformation starten.
+                <Text as="span" > Heute</Text> beginnt dein neues Leben.
               </Heading>
             </VStack>
           </VStack>

@@ -14,7 +14,9 @@ import { generateMetadata } from "@/utils/metadata";
 import { Link } from "@/components/ui/link";
 import { HeroSection } from "@/sections/mainpage/hero-section";
 import { MeetTheFounderSection } from "@/sections/mainpage/meet-the-founder-section";
+import { CustomerResultsSection } from "@/sections/mainpage/CustomerResultsSection";
 import { HandyappSection } from "@/sections/mainpage/handyapp-section";
+import { ProcessSection } from "@/sections/mainpage/process-section";
 import {
   ArrowSquareOut,
   UserCircle,
@@ -82,41 +84,12 @@ export default async function Page() {
         ]}
       />
       <MeetTheFounderSection />
+      <CustomerResultsSection />
+      <ProcessSection />
       <HandyappSection />
-      <Section size="lg" bg="transparent">
-        <VStack gap="12">
-          <Stack gap="4" textAlign="center">
-            <Heading
-              as="h1"
-              textStyle={{ base: "2xl", md: "4xl" }}
-              maxW={{ md: "md" }}
-              mx="auto"
-              lineHeight="tighter"
-            >
-              Minimales Tooling mit leistungsstarken Funktionen
-            </Heading>
-
-            <Text color="fg.muted" textStyle="lg" maxW={{ md: "lg" }} mx="auto">
-              Diese Software nutzt die Kernfunktionalität von Outseta, Next.js
-              und Chakra UI, um Zeit zu sparen und sich auf Code zu konzentrieren,
-              der wirklich wichtig ist.
-            </Text>
-          </Stack>
-          <SimpleGrid columns={{ base: 1, md: 3 }} gap="4">
-            {features.map((feature) => (
-              <Card.Root key={feature.title}>
-                <Card.Body gap={{ base: "4", md: "6" }}>
-                  <Icon size="2xl">{feature.icon}</Icon>
-                  <Stack>
-                    <Card.Title>{feature.title}</Card.Title>
-                    <Card.Description>{feature.description}</Card.Description>
-                  </Stack>
-                </Card.Body>
-              </Card.Root>
-            ))}
-          </SimpleGrid>
-        </VStack>
-      </Section>
+     
+      
+      
     </>
   );
 }

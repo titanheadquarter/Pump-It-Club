@@ -1,46 +1,136 @@
+"use client";
+
 import {
   Container,
   HStack,
-  Icon,
+  VStack,
   Stack,
   Text,
-  type TextProps,
+  Box,
 } from "@chakra-ui/react";
-import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
-import { Logo } from "./logo";
+import { LinkedinLogo, InstagramLogo } from "@phosphor-icons/react";
+import NextImage from "next/image";
 import { projectConfig } from "@/config";
-import { Link } from "../ui/link";
+import { Link } from "@/components/ui/link";
 
-const Copyright = (props: TextProps) => {
+const Copyright = () => {
   return (
-    <Text fontSize="sm" color="fg.muted" {...props}>
-      &copy; {new Date().getFullYear()} {projectConfig.general.name}. All rights
-      reserved.
+    <Text fontSize={{ base: "2xs", sm: "xs" }} color="gray.600" textAlign="center" opacity={0.8}>
+      &copy; {new Date().getFullYear()} {projectConfig.general.name}. Alle Rechte vorbehalten.
     </Text>
   );
 };
 
-// TODO: Map only which are available
-const socialLinks = [
-  { href: projectConfig.links.twitter, icon: <SiX /> },
-  { href: projectConfig.links.github, icon: <SiGithub /> },
-  { href: projectConfig.links.linkedin, icon: <SiLinkedin /> },
-];
+export const Footer = () => {
+  const legalLinks = [
+    { href: "/legal/privacy-policy", label: "Datenschutzerklärung" },
+    { href: "/legal/terms-and-conditions", label: "AGB" },
+    { href: "/legal/cookie-policy", label: "Cookie-Richtlinie" },
+    { href: "/legal/imprint", label: "Impressum" },
+  ];
 
-export const Footer = () => (
-  <Container as="footer" py={{ base: "10", md: "12" }}>
-    <Stack gap="6">
-      <Stack direction="row" justify="space-between" align="center">
-        <Logo height="32" />
-        <HStack gap="4">
-          {socialLinks.map(({ href, icon }, index) => (
-            <Link key={index} href={href} colorPalette="gray">
-              <Icon size="md">{icon}</Icon>
-            </Link>
-          ))}
-        </HStack>
-      </Stack>
-      <Copyright />
-    </Stack>
-  </Container>
-);
+  const socialLinks = [
+    { 
+      href: projectConfig.links.linkedin || "https://www.linkedin.com/", 
+      icon: LinkedinLogo,
+      label: "LinkedIn"
+    },
+    { 
+      href: (projectConfig.links as any).instagram || "https://www.instagram.com/", 
+      icon: InstagramLogo,
+      label: "Instagram"
+    },
+  ];
+
+  return (
+    <Box
+      as="footer"
+      bg="white"
+      py={{ base: 4, md: 5, lg: 6 }}
+      mt="auto"
+    >
+      <Container maxW="6xl" px={{ base: 4, sm: 6, md: 8 }}>
+        <VStack gap={{ base: 3, md: 4 }} align="stretch">
+          {/* Logo and Social Links */}
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            justify="space-between"
+            align={{ base: "center", md: "flex-start" }}
+            gap={{ base: 3, md: 4 }}
+          >
+            {/* Logo */}
+            <Box>
+              <Link href="/" display="inline-block">
+                <Box
+                  height="24px"
+                  width="100px"
+                  position="relative"
+                >
+                  <NextImage
+                    src="/logo.webp"
+                    alt={`${projectConfig.general.name} Logo`}
+                    fill
+                    sizes="100px"
+                    style={{
+                      objectFit: "contain",
+                      objectPosition: "left center",
+                    }}
+                  />
+                </Box>
+              </Link>
+            </Box>
+
+            {/* Social Links */}
+            <HStack gap={3}>
+              {socialLinks.map(({ href, icon: Icon, label }, index) => (
+                <Link
+                  key={index}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  color="gray.800"
+                  _hover={{ color: "gray.600" }}
+                  transition="color 0.2s"
+                  aria-label={label}
+                >
+                  <Icon size={20} weight="regular" />
+                </Link>
+              ))}
+            </HStack>
+          </Stack>
+
+          {/* Legal Links - In einer Reihe */}
+          <HStack
+            gap={{ base: 2, sm: 3, md: 4 }}
+            justify="center"
+            flexWrap="wrap"
+          >
+            {legalLinks.map(({ href, label }, index) => (
+              <>
+                {index > 0 && (
+                  <Text color="gray.400" fontSize="xs" opacity={0.5}>
+                    •
+                  </Text>
+                )}
+                <Link
+                  key={index}
+                  href={href}
+                  fontSize={{ base: "2xs", sm: "xs" }}
+                  color="gray.800"
+                  _hover={{ color: "gray.600", textDecoration: "underline" }}
+                  transition="color 0.2s"
+                  whiteSpace="nowrap"
+                >
+                  {label}
+                </Link>
+              </>
+            ))}
+          </HStack>
+
+          {/* Copyright */}
+          <Copyright />
+        </VStack>
+      </Container>
+    </Box>
+  );
+};
