@@ -98,13 +98,13 @@ interface FeatureCardProps {
   featured?: boolean;
 }
 
-const FeatureCard = ({ 
-  icon, 
-  title, 
-  description, 
-  linkText, 
+const FeatureCard = ({
+  icon,
+  title,
+  description,
+  linkText,
   linkHref = "#",
-  featured = false 
+  featured = false
 }: FeatureCardProps) => {
   return (
     <Box
@@ -126,7 +126,7 @@ const FeatureCard = ({
           position: 'absolute',
           inset: featured ? '-3px' : '-1px',
           borderRadius: 'xl',
-          background: featured 
+          background: featured
             ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(22, 163, 74, 0.15) 50%, rgba(21, 128, 61, 0.1) 100%)'
             : 'linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(22, 163, 74, 0.05) 100%)',
           filter: 'blur(6px)',
@@ -135,11 +135,11 @@ const FeatureCard = ({
           animation: featured ? 'pulseGlow 4s ease-in-out infinite' : undefined
         },
         '@keyframes pulseGlow': {
-          '0%, 100%': { 
+          '0%, 100%': {
             opacity: 0.7,
             transform: 'scale(1)'
           },
-          '50%': { 
+          '50%': {
             opacity: 1,
             transform: 'scale(1.02)'
           }
@@ -151,7 +151,7 @@ const FeatureCard = ({
       }}
     >
       {/* Featured badge */}
-     
+
 
       <VStack gap={{ base: "4", md: "5" }} align="flex-start" flex="1">
         {/* Icon Box with Hero-style glow */}
@@ -170,7 +170,7 @@ const FeatureCard = ({
             borderColor: "rgba(34, 197, 94, 0.4)"
           }}
         >
-          <Box 
+          <Box
             color="green.500"
           >
             {icon}
@@ -198,33 +198,7 @@ const FeatureCard = ({
           {description}
         </Text>
 
-        {/* Hero-style CTA Link */}
-        <Link
-          href={linkHref}
-          display="inline-flex"
-          alignItems="center"
-          gap="2"
-          mt="auto"
-          px={4}
-          py={2}
-          bg="rgba(34, 197, 94, 0.1)"
-          borderRadius="lg"
-          border="1px solid"
-          borderColor="black"
-          color="green.600"
-          fontSize="sm"
-          fontWeight="600"
-          transition="all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
-          _hover={{
-            bg: "rgba(34, 197, 94, 0.15)",
-            borderColor: "rgba(34, 197, 94, 0.3)",
-            color: "green.700",
-            transform: "translateX(4px)"
-          }}
-        >
-          {linkText}
-          <ArrowRight size={16} weight="bold" />
-        </Link>
+       
       </VStack>
     </Box>
   );
@@ -260,25 +234,25 @@ export const HandyappSection = () => {
   const features = [
     {
       icon: <GraduationCap size={32} weight="fill" />,
-      title: "App-Einsteiger ohne Vorkenntnisse",
-      description: "Perfekt für alle, die gerade erst mit Fitness-Apps starten. Intuitive Bedienung, klare Anleitungen und Schritt-für-Schritt-Guides führen dich durch deine ersten Workouts und helfen dir, gesunde Gewohnheiten zu entwickeln.",
+      title: "Einsteiger-Coaching für deinen ersten Schritt",
+      description: "Du bist neu im Fitness-Bereich oder warst lange nicht mehr aktiv? Unser Einsteiger-Coaching führt dich Schritt für Schritt an deine Ziele heran. Mit individuellen Trainingsplänen, Ernährungsberatung und persönlicher Betreuung legst du das perfekte Fundament für deinen langfristigen Erfolg.",
       linkText: "Ich bin Anfänger",
       linkHref: "#",
       featured: false,
     },
     {
       icon: <ChartLineUp size={32} weight="fill" />,
-      title: "Fortgeschrittene Nutzer, die den nächsten Level erreichen wollen",
-      description: "Du kennst dich bereits mit Fitness-Apps aus, suchst aber nach neuen Herausforderungen und erweiterten Funktionen? Nutze unsere fortgeschrittenen Trainingspläne, detaillierte Analytics und personalisierte Empfehlungen, um deine Ziele schneller zu erreichen.",
-      linkText: "Ich bin fortgeschritten",
+      title: "Premium Personal Coaching für maximale Ergebnisse",
+      description: "Du willst ernsthafte Fortschritte und brauchst professionelle Unterstützung? Unser Premium Coaching bietet dir 1:1 Betreuung, wöchentliche Check-ins, angepasste Trainings- und Ernährungspläne sowie direkten Zugang zu deinem Personal Coach. Erreiche deine Ziele schneller und nachhaltiger als je zuvor.",
+      linkText: "Ich will Premium Coaching",
       linkHref: "#",
-      featured: true,
+      featured: false,
     },
     {
       icon: <Trophy size={32} weight="fill" />,
-      title: "Power-User, die alle Funktionen optimal nutzen möchten",
-      description: "Du willst das Maximum aus der App herausholen? Erfahrene Nutzer profitieren von unseren Premium-Features wie individuellen Trainingsplänen, Live-Coaching, Community-Challenges und exklusiven Inhalten, die deine Fitness-Reise auf die nächste Stufe bringen.",
-      linkText: "Ich bin Power-User",
+      title: "Exklusive Fitness-App für Coaching-Kunden",
+      description: "Als Coaching-Kunde erhältst du exklusiven Zugang zu unserer Fitness-App. Tracke deine Fortschritte, erhalte personalisierte Trainingspläne, nutze das Ernährungstagebuch und bleibe in direktem Kontakt mit deinem Coach. Die perfekte Ergänzung zu deiner persönlichen Betreuung.",
+      linkText: "Mehr zur App erfahren",
       linkHref: "#",
       featured: false,
     },
@@ -291,11 +265,11 @@ export const HandyappSection = () => {
         overflow="hidden"
       >
         {/* Same container structure as Hero Section */}
-        <Container 
-          maxW="6xl" 
-          py={{ base: 2, sm: 2, md: 2, lg: 2 }} 
+        <Container
+          maxW="6xl"
+          py={{ base: 2, sm: 2, md: 2, lg: 2 }}
           px={{ base: 4, sm: 6, md: 8 }}
-          position="relative" 
+          position="relative"
           zIndex={1}
         >
           <VStack gap={{ base: 4, sm: 5, md: 6, lg: 8 }} w="full">
@@ -307,7 +281,7 @@ export const HandyappSection = () => {
               transform={isLoaded ? 'translateY(0)' : 'translateY(30px)'}
               transition="all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)"
             >
-             
+
 
               {/* H2 Main Heading - kleiner als Hero */}
               <Heading
@@ -320,7 +294,7 @@ export const HandyappSection = () => {
                 letterSpacing="tighter"
                 maxW="4xl"
               >
-                Unsere{' '}
+                Meine{' '}
                 <Text
                   as="span"
                   position="relative"
@@ -347,9 +321,9 @@ export const HandyappSection = () => {
                     }
                   }}
                 >
-                  Handyapp
+                  Beratung
                 </Text>{' '}
-                eignet sich besonders für...
+                deckt alle Bereiche ab, ohne verzicht auf Qualität
               </Heading>
 
               {/* H3 Subheading */}
@@ -361,10 +335,9 @@ export const HandyappSection = () => {
                 maxW="2xl"
                 lineHeight="tall"
               >
-                Erhalte als Coaching-Kunde{' '}
-                <Text as="span" color="green.600" fontWeight="bold">exklusiven Zugang</Text>{' '}
-                zu unserer Premium-App
-              </Heading>
+                Fang endlich an{' '}
+                <Text as="span" color="green.600" fontWeight="bold">DEINE ZIELE</Text>{' '}
+                zu erreichen              </Heading>
             </VStack>
 
             {/* Statistics Section with staggered animation */}
@@ -377,10 +350,10 @@ export const HandyappSection = () => {
               transition="all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s"
             >
               {statistics.map((stat, index) => (
-                <StatisticCard 
-                  key={index} 
-                  value={stat.value} 
-                  label={stat.label} 
+                <StatisticCard
+                  key={index}
+                  value={stat.value}
+                  label={stat.label}
                 />
               ))}
             </SimpleGrid>

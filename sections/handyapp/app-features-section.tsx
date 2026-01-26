@@ -200,7 +200,7 @@ export const AppFeaturesSection = () => {
               description: "Verfolge nicht nur Kalorien, sondern auch deine Makronährstoffe (Proteine, Kohlenhydrate, Fette) für eine optimale Nährstoffverteilung.",
             },
           ],
-          imageSrc: "/macher.webp",
+          imageSrc: "/applandingpage/PumpItClub-1.webp",
           imageAlt: "Ernährung Features",
           imageOnLeft: false,
         },
@@ -222,7 +222,7 @@ export const AppFeaturesSection = () => {
               description: "Integrierter Timer für Pausenzeiten und Supersätze. Bleibe fokussiert und optimiere deine Trainingszeit.",
             },
           ],
-          imageSrc: "/macher.webp",
+          imageSrc: "/applandingpage/PumpItClub-3.webp",
           imageAlt: "Training Features",
           imageOnLeft: true,
         },
@@ -245,7 +245,7 @@ export const AppFeaturesSection = () => {
       >
         <Container
           maxW="7xl"
-          py={{ base: 16, sm: 20, md: 24, lg: 28 }}
+          py={{ base: 2, sm: 6, md: 8, lg: 10 }}
           px={{ base: 4, sm: 6, md: 8 }}
           position="relative"
           zIndex={1}

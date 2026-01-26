@@ -103,7 +103,7 @@ export const MeetTheFounderAppSection = ({
                   position="relative"
                   display="inline-block"
                   css={{
-                    background: 'linear-gradient(135deg,rgb(21, 227, 35) 50%, #16a34a 100%, #15803d 100%)',
+                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',

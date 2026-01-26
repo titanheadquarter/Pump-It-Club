@@ -232,30 +232,7 @@ const CustomerResult = ({
           </Box>
         )}
 
-        <HStack gap="4" mt="2">
-          <VStack gap="1" align="start">
-            <HStack gap="2">
-              <Star size={20} weight="fill" color="#fbbf24" />
-              <Text fontSize="lg" fontWeight="bold" color="fg">
-                5.0
-              </Text>
-            </HStack>
-            <Text fontSize="xs" color="fg.muted">
-              Bewertung
-            </Text>
-          </VStack>
-          <VStack gap="1" align="start">
-            <HStack gap="2">
-              <Trophy size={20} weight="fill" color="success.solid" />
-              <Text fontSize="lg" fontWeight="bold" color="fg">
-                Erfolg
-              </Text>
-            </HStack>
-            <Text fontSize="xs" color="fg.muted">
-              Garantiert
-            </Text>
-          </VStack>
-        </HStack>
+       
       </VStack>
     </Box>
   );
@@ -289,12 +266,12 @@ interface CustomerResultsSectionProps {
 export const CustomerResultsSection = ({ 
   customers = [
     {
-      beforeImageSrc: "/macher.webp",
-      afterImageSrc: "/macher.webp", 
-      customerName: "Marco S.",
-      timeframe: "6 Monate",
-      achievement: "-15kg, +12kg Muskeln",
-      testimonial: "Ich hätte nie gedacht, dass ich so schnell solche Ergebnisse sehen würde. Das Coaching war genau das, was ich brauchte."
+      beforeImageSrc: "/landingpage/kevinvorher.webp",
+      afterImageSrc: "/landingpage/kevinnachher.webp", 
+      customerName: "Kevin W.",
+      timeframe: "24 Monate",
+      achievement: "+15kg Muskeln",
+      testimonial: "Ich habe mich immer geschämt, weil ich so dünn war. Jetzt bin ich stolz auf meinen Körper und fühle mich viel sicherer. Ich hätte nie gedacht, dass ich so schnell solche Ergebnisse sehen würde. Das Coaching war genau das, was ich brauchte."
     },
     {
       beforeImageSrc: "/macher.webp",

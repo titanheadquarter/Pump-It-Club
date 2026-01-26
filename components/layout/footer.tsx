@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react"; // Added React import for Fragment
 import {
   Container,
   HStack,
@@ -99,21 +100,20 @@ export const Footer = () => {
             </HStack>
           </Stack>
 
-          {/* Legal Links - In einer Reihe */}
+          {/* Legal Links - In einer Reihe - FIXED: Added key to Fragment */}
           <HStack
             gap={{ base: 2, sm: 3, md: 4 }}
             justify="center"
             flexWrap="wrap"
           >
             {legalLinks.map(({ href, label }, index) => (
-              <>
+              <React.Fragment key={index}>
                 {index > 0 && (
                   <Text color="gray.400" fontSize="xs" opacity={0.5}>
                     •
                   </Text>
                 )}
                 <Link
-                  key={index}
                   href={href}
                   fontSize={{ base: "2xs", sm: "xs" }}
                   color="gray.800"
@@ -123,7 +123,7 @@ export const Footer = () => {
                 >
                   {label}
                 </Link>
-              </>
+              </React.Fragment>
             ))}
           </HStack>
 

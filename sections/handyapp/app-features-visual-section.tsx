@@ -42,7 +42,7 @@ export const AppFeaturesVisualSection = () => {
         {/* COMPACT RESPONSIVE BREAKPOINTS */}
         <Container
           maxW="6xl"
-          py={{ base: 8, sm: 12, md: 16, lg: 20 }}
+          py={{ base: 0, sm: 0, md: 0, lg: 0 }}
           px={{ base: 4, sm: 6, md: 8 }}
           position="relative"
           zIndex={1}
@@ -57,20 +57,7 @@ export const AppFeaturesVisualSection = () => {
               transition="all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)"
             >
               {/* Simple Badge */}
-              <Badge
-                bg="linear-gradient(135deg, #22c55e 0%, #16a34a 100%)"
-                color="white"
-                px={{ base: 3, sm: 4 }}
-                py={2}
-                borderRadius="full"
-                fontSize={{ base: "xs", sm: "sm" }}
-                fontWeight="bold"
-                textTransform="uppercase"
-                letterSpacing="wider"
-                boxShadow="0 4px 20px rgba(34, 197, 94, 0.4)"
-              >
-                📱 APP IM DETAIL
-              </Badge>
+
 
               {/* H2 - Proper Responsive Sizes */}
               <Heading
@@ -91,8 +78,7 @@ export const AppFeaturesVisualSection = () => {
                     background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 8px rgba(34, 197, 94, 0.3))'
+                  
                   }}
                 >
                   möglich ist
@@ -216,7 +202,7 @@ export const AppFeaturesVisualSection = () => {
                 transition="all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s"
               >
                 <AppMockup
-                  imageSrc="/macher.webp"
+                  imageSrc="/applandingpage/PumpItClub-7.webp"
                   imageAlt="Pump It Club App"
                   aspectRatio={9 / 16}
                 />

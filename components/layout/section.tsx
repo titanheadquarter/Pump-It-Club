@@ -11,16 +11,16 @@ export const Section = ({ header, size = "md", ...props }: SectionProps) => {
   const { ...rootProps } = props;
   const paddingY = {
     sm: {
-      base: "6",
-      md: "8",
+      base: "2",
+      md: "4",
     },
     md: {
-      base: "12",
-      md: "16",
+      base: "8",
+      md: "12",
     },
     lg: {
-      base: "16",
-      md: "24",
+      base: "12",
+      md: "16",
     },
   };
   if (header) {

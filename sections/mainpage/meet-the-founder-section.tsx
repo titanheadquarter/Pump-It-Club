@@ -24,9 +24,9 @@ interface MeetTheFounderSectionProps {
 }
 
 export const MeetTheFounderSection = ({
-  imageSrc = "/macher.webp",
+  imageSrc = "/landingpage/VorherNachher.webp",
   imageAlt = "Felix - Gründer von PumpItClub",
-  secondImageSrc = "/macher2.webp",
+  secondImageSrc = "/landingpage/macher2.webp",
   secondImageAlt = "Felix - Gründer von PumpItClub",
   achievements,
   missionText,

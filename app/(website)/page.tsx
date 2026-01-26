@@ -17,6 +17,7 @@ import { MeetTheFounderSection } from "@/sections/mainpage/meet-the-founder-sect
 import { CustomerResultsSection } from "@/sections/mainpage/CustomerResultsSection";
 import { HandyappSection } from "@/sections/mainpage/handyapp-section";
 import { ProcessSection } from "@/sections/mainpage/process-section";
+import { AppDownloadSection } from "@/sections/handyapp/app-download-section";
 import {
   ArrowSquareOut,
   UserCircle,
@@ -87,6 +88,8 @@ export default async function Page() {
       <CustomerResultsSection />
       <ProcessSection />
       <HandyappSection />
+      <AppDownloadSection />
+    
      
       
       

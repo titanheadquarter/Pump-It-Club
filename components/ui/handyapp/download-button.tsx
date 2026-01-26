@@ -1,6 +1,7 @@
 "use client";
 
-import { Box, HStack, VStack, Text, chakra } from "@chakra-ui/react";
+import { Box, chakra } from "@chakra-ui/react";
+import { Image } from "@/components/ui/image";
 
 interface DownloadButtonProps {
   store: "apple" | "google";
@@ -21,45 +22,35 @@ export const DownloadButton = ({
       display="inline-block"
     >
       <Box
-        bg="black"
-        color="white"
-        px={{ base: 6, md: 8 }}
-        py={{ base: 4, md: 5 }}
+        position="relative"
         borderRadius="lg"
+        overflow="hidden"
         transition="all 0.3s ease"
         _hover={{
-          bg: "gray.800",
           transform: "translateY(-2px)",
+          boxShadow: "0 8px 25px -4px rgba(0, 0, 0, 0.3)"
         }}
-        minW={{ base: "200px", md: "220px" }}
+        minW={{ base: "160px", md: "180px" }}
+        h={{ base: "48px", md: "54px" }}
       >
-        <HStack gap={3} justify="center">
-          {isApple ? (
-            <>
-              <Text fontSize="2xl">🍎</Text>
-              <VStack gap={0} align="start">
-                <Text fontSize="xs" lineHeight="1">
-                  DOWNLOAD ON THE
-                </Text>
-                <Text fontSize="lg" fontWeight="bold" lineHeight="1">
-                  App Store
-                </Text>
-              </VStack>
-            </>
-          ) : (
-            <>
-              <Text fontSize="2xl">▶</Text>
-              <VStack gap={0} align="start">
-                <Text fontSize="xs" lineHeight="1">
-                  GET IT ON
-                </Text>
-                <Text fontSize="lg" fontWeight="bold" lineHeight="1">
-                  Google Play
-                </Text>
-              </VStack>
-            </>
-          )}
-        </HStack>
+        <Image
+          src={
+            isApple 
+              ? "/applandingpage/app-store-black.webp"  // Platzhalter für Apple Badge
+              : "/applandingpage/google-play-black.webp" // Platzhalter für Google Badge
+          }
+          alt={
+            isApple 
+              ? "Download on the App Store" 
+              : "Get it on Google Play"
+          }
+          fill
+          style={{
+            objectFit: "contain",
+            objectPosition: "center",
+          }}
+          sizes="(max-width: 768px) 160px, 180px"
+        />
       </Box>
     </chakra.a>
   );

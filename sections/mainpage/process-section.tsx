@@ -49,8 +49,6 @@ const PhaseCard = ({
       _hover={{
         borderColor: "primary.solid/50"
       }}
-     
-      
     >
       <Stack
         direction={{ base: "column", lg: imageOnLeft ? "row" : "row-reverse" }}
@@ -117,7 +115,7 @@ const PhaseCard = ({
           </VStack>
         </Box>
 
-        {/* Image Placeholder */}
+        {/* Image */}
         <Box
           flex="1"
           w="full"
@@ -173,31 +171,37 @@ interface ProcessSectionProps {
 export const ProcessSection = ({
   phases = [
     {
-      title: "Umfassendes Video-Training auf Abruf",
-      description: "Als Teilnehmer startest du mit unseren grundlegenden Prinzipien und entwickelst dich Schritt für Schritt bis hin zu fortgeschrittenen Strategien.",
+      title: "Umfassender Checkup Call, um DIE richtige Strategie für DICH zu finden",
+      description: "Wir analysieren deinen aktuellen Stand, deine Ziele und deinen Alltag um die beste Strategie für dich zu finden. Für werden dich zusammen zu deinem Traumkörper führen.",
       features: [
-        "Fokus auf's Wesentliche",
+        "Fokus auf dich und deine Ziele",
         "Strategien wirklich verstehen",
-        "Lernen wann und wo du willst"
+        "Pläne an deinen Alltag angepasst"
       ],
+      imageSrc: "/landingpage/landingpage.webp",
+      imageAlt: "Video-Training und Online-Learning Phase 1",
     },
     {
-      title: "Live-Mentoring & Umsetzung",
-      description: "Lerne direkt von uns als erfahrene Tradern, erhalte persönliche Anleitung und setze dein Wissen gezielt in die Praxis um.",
+      title: "Weekly Calls und Arschtritte!",
+      description: "Wenn du den geschmiedeten Plan NICHT umsetzt, dann brauchst du dich nicht wundern, wenn du nichts erreicht. Mit mir an deiner Seite, wird das aber kein Problem mehr sein!",
       features: [
-        "Lernen & direkt anwenden",
-        "Mehr Sicherheit im Trading",
-        "Praxisnah"
+        "Du wirst es schaffen",
+        "Wir kommen deinem Ziel entgegen",
+        "Ich bin immer für dich erreichbar"
       ],
+      imageSrc: "/applandingpage/phase-2-mentoring.webp",
+      imageAlt: "Live-Mentoring und persönliche Betreuung Phase 2",
     },
     {
-      title: "Trading meistern & echte Ergebnisse erzielen",
-      description: "Jetzt verstehst du unsere Strategie in ihrer Tiefe und kannst sie selbstbewusst umsetzen - für mehr Freiheit und finanzielle Klarheit.",
+      title: "Traumbody erreicht. Strategie entwickeln, damit dein Körper langfristig so bleibt",
+    description: "Du bist an deinem ersten Ziel! Wir entwickeln eine Strategie, damit dein Körper langfristig so bleibt und du deine nächsten Ziele erreichst.",
       features: [
         "Konstanz & Kontrolle",
         "Mehr Freiheit durch Ergebnisse",
         "Klarer Weg zu deinem Ziel"
       ],
+      imageSrc: "/applandingpage/phase-3-mastery.webp",
+      imageAlt: "Trading Mastery und Ergebnisse Phase 3",
     }
   ]
 }: ProcessSectionProps) => {
@@ -212,7 +216,6 @@ export const ProcessSection = ({
     <Section size="lg" bg="blackAlpha.900">
       <Container
         maxW="7xl"
-        
         py={{ base: 2, sm: 2, md: 2, lg: 2 }}
         px={{ base: 4, sm: 6, md: 8 }}
         position="relative"
