@@ -1,187 +1,167 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import {
   Center,
-  CollapsibleContent,
-  CollapsibleRoot,
   Container,
-  HStack,
-  VStack,
-  StackProps,
   Box,
+  HStack,
+  Button,
+  useBreakpointValue,
 } from "@chakra-ui/react";
-import { Logo } from "./logo";
-import { Button } from "@/components/ui/button";
-import { CollapsibleTrigger } from "@/components/ui/collapsible-trigger";
-import { UserMenu } from "../ui/user-menu";
 import { Link } from "@/components/ui/link";
-import { SignedIn, SignedOut } from "../auth/protect-content";
-import { Login, SignUp } from "../auth/embed";
-import {
-  MenuContent,
-  MenuItem,
-  MenuItemGroup,
-  MenuRoot,
-  MenuSeparator,
-  MenuTrigger,
-} from "../ui/menu";
-
-export const MenuLink = (props) => {
-  return (
-    <Link href={props.href} w="full">
-      <Button
-        colorPalette="gray"
-        variant={{ base: "ghost", md: "plain" }}
-        width={{ base: "full", md: "auto" }}
-        justifyContent={{ base: "flex-start", md: "center" }}
-      >
-        {props.children}
-      </Button>
-    </Link>
-  );
-};
-
-// TODO: Improve nav links
-export const NavbarLinkMenu = (props: StackProps) => {
-  return (
-    <>
-      <MenuLink href="/docs">Docs</MenuLink>
-      <MenuRoot>
-        <MenuTrigger asChild>
-          <Button
-            colorPalette="gray"
-            width={{ base: "full", md: "auto" }}
-            variant={{ base: "ghost", md: "plain" }}
-            justifyContent={{ base: "flex-start", md: "center" }}
-          >
-            Demo
-          </Button>
-        </MenuTrigger>
-        <MenuContent>
-          <MenuItemGroup title="Seiten">
-            <Link href="/pricing">
-              <MenuItem value="pricing">Preise</MenuItem>
-            </Link>
-            <Link href="/contact">
-              <MenuItem value="contact">Kontakt</MenuItem>
-            </Link>
-            <Link href="/support">
-              <MenuItem value="support">Support</MenuItem>
-            </Link>
-          </MenuItemGroup>
-          <MenuSeparator />
-          <MenuItemGroup title="Utility">
-            <Link href="/thank-you">
-              <MenuItem value="thank-you">Vielen Dank</MenuItem>
-            </Link>
-            <Link href="/not-found">
-              <MenuItem value="not-found">Nicht gefunden</MenuItem>
-            </Link>
-            <Link href="/javascript">
-              <MenuItem value="javascript">JavaScript</MenuItem>
-            </Link>
-            <Link href="/legal/terms-and-conditions">
-              <MenuItem value="terms-and-conditions">
-                AGB
-              </MenuItem>
-            </Link>
-          </MenuItemGroup>
-          <MenuSeparator />
-          <MenuItemGroup title="Authentifizierung">
-            <Link href="/app/free">
-              <MenuItem value="free">Geschützte Seite (Free Plan)</MenuItem>
-            </Link>
-            <Link href="/app/basic">
-              <MenuItem value="basic">Geschützte Seite (Basis Plan)</MenuItem>
-            </Link>
-            <Link href="/app/pro">
-              <MenuItem value="pro">Geschützte Seite (Pro Plan)</MenuItem>
-            </Link>
-          </MenuItemGroup>
-          <MenuSeparator />
-          <MenuItemGroup title="Embeds">
-            <Link href="/embed/login">
-              <MenuItem value="login">Login</MenuItem>
-            </Link>
-            <Link href="/embed/sign-up">
-              <MenuItem value="login">Sign up</MenuItem>
-            </Link>
-            <Link href="/embed/lead-capture">
-              <MenuItem value="lead-capture">Lead Capture</MenuItem>
-            </Link>
-            <Link href="/embed/email-list">
-              <MenuItem value="email-list">Email List</MenuItem>
-            </Link>
-          </MenuItemGroup>
-        </MenuContent>
-      </MenuRoot>
-    </>
-  );
-};
-
-export const NavbarActionMenu = ({ type }: { type: "website" | "app" }) => {
-  return (
-    <>
-      <SignedOut>
-        <Login popup>
-          <Button size="sm" variant="outline" colorPalette="gray">
-            Login
-          </Button>
-        </Login>
-        <SignUp popup>
-          <Button size="sm">Registrieren</Button>
-        </SignUp>
-      </SignedOut>
-      <SignedIn>
-        {type == "app" ? (
-          <UserMenu />
-        ) : (
-          <>
-            <Button size="sm">Zur Plattform</Button>
-          </>
-        )}
-      </SignedIn>
-    </>
-  );
-};
+import { Image } from "@/components/ui/image";
+import { DeviceMobile, ArrowLeft } from "@phosphor-icons/react";
 
 export const Navbar = ({ type }: { type: "website" | "app" }) => {
-  console.log(type);
+  const pathname = usePathname();
+  const isAppPage = pathname?.includes("/pumpitclubapp");
+  const isMainPage = pathname === "/";
+  const iconSize = useBreakpointValue({ base: 14, sm: 16, md: 18 }) || 16;
+
   return (
     <Center
       as="header"
       position="fixed"
       zIndex="docked"
-      top={{ base: "4", md: "6" }}
-      w="full"
+      top={{ base: "4", sm: "6", md: "6" }}
+      left="0"
+      right="0"
+      w="100vw"
+      maxW="100vw"
+      px={{ base: "4", md: "6" }}
+      overflowX="hidden"
     >
-      <Container maxW={{ base: "full", md: "3xl" }}>
+      <Container maxW={{ base: "full", md: "1100px" }} w="full" px="0" mx="auto">
         <Box
           w="full"
-          px="4"
-          py="3"
-          boxShadow="xs"
-          background="bg.panel"
+          px={{ base: 3, sm: 4, md: 4 }}
+          py={{ base: 2.5, sm: 3, md: 3 }}
+          boxShadow="0 2px 12px -2px rgba(0, 0, 0, 0.08), 0 4px 24px -4px rgba(0, 0, 0, 0.06), 0 0 0 0.5px rgba(255, 255, 255, 0.05) inset"
+          background="white"
+          backdropFilter="blur(20px) saturate(400%)"
+          border="1px solid"
+          borderColor="border.emphasized/50"
           borderRadius="l3"
+          overflow="hidden"
         >
-          <CollapsibleRoot>
-            <HStack gap={{ base: "3", md: "8" }} justify="space-between">
-              <CollapsibleTrigger />
-              <Link href="/">
-                <Logo />
+          <HStack
+            w="full"
+            justify="space-between"
+            align="center"
+            gap={{ base: 1, sm: 2, md: 3 }}
+          >
+            {/* Left: Page Switch Button */}
+            <Box flexShrink={0} w={{ base: "60px", sm: "80px", md: "100px" }}>
+              <Link href={isAppPage ? "/" : "/pumpitclubapp"}>
+                <Button
+                  size={{ base: "sm", sm: "md", md: "lg" }}
+                  variant="ghost"
+                  colorPalette="gray"
+                  px={{ base: 1.5, sm: 3, md: 4 }}
+                  py={{ base: 1.5, sm: 2, md: 2.5 }}
+                  fontSize={{ base: "xs", sm: "sm", md: "md" }}
+                  borderRadius="lg"
+                  transition="all 0.3s ease"
+                  w="full"
+                  _hover={{
+                    bg: "rgba(0, 0, 0, 0.05)",
+                    transform: "translateY(-1px)",
+                  }}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent={{ base: "center", sm: "flex-start" }}
+                  gap={{ base: 0, sm: 1.5, md: 2 }}
+                >
+                  {isAppPage ? (
+                    <>
+                      
+                      <Box 
+                        as="span" 
+                        display={{ base: "none", sm: "inline" }}
+                        whiteSpace="nowrap"
+                      >
+                        Zur Website
+                      </Box>
+                    </>
+                  ) : (
+                    <>
+                     
+                      <Box 
+                        as="span" 
+                        display={{ base: "none", sm: "inline" }}
+                        whiteSpace="nowrap"
+                      >
+                        Zur App
+                      </Box>
+                    </>
+                  )}
+                </Button>
               </Link>
-              <HStack justify="flex-end" w="full" hideFrom="md">
-                <NavbarActionMenu type="app" />
-              </HStack>
-              <HStack gap="2" hideBelow="md">
-                <NavbarLinkMenu />
-                <NavbarActionMenu type="app" />
-              </HStack>
-            </HStack>
-            <CollapsibleContent hideFrom="md" mt={4}>
-              <NavbarLinkMenu />
-            </CollapsibleContent>
-          </CollapsibleRoot>
+            </Box>
+
+            {/* Center: Logo */}
+            <Center 
+              flex="1"
+              h="full" 
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              minW="0"
+            >
+              <Link 
+                href="/"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Image
+                  src="/logo.webp"
+                  alt="PumpItClub Logo"
+                  width={200}
+                  height={50}
+                  style={{
+                    height: "30px",
+                    width: "auto",
+                    objectFit: "contain",
+                    display: "block",
+                  }}
+                />
+              </Link>
+            </Center>
+
+            {/* Right: Login Button */}
+            <Box flexShrink={0} w={{ base: "60px", sm: "80px", md: "100px" }}>
+              <Link href="/login">
+                <Button
+                  size={{ base: "sm", sm: "md", md: "lg" }}
+                  variant="outline"
+                  colorPalette="gray"
+                  px={{ base: 1.5, sm: 3, md: 4 }}
+                  py={{ base: 1.5, sm: 2, md: 2.5 }}
+                  fontSize={{ base: "xs", sm: "sm", md: "md" }}
+                  borderRadius="lg"
+                  bg="rgba(255, 255, 255, 0.9)"
+                  backdropFilter="blur(20px) saturate(200%)"
+                  border="1px solid"
+                  borderColor="border.emphasized/50"
+                  boxShadow="0 2px 12px -2px rgba(0, 0, 0, 0.08), 0 4px 24px -4px rgba(0, 0, 0, 0.06)"
+                  transition="all 0.3s ease"
+                  w="full"
+                  _hover={{
+                    bg: "rgba(255, 255, 255, 0.95)",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 4px 16px -2px rgba(0, 0, 0, 0.12), 0 8px 32px -4px rgba(0, 0, 0, 0.08)",
+                  }}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent={{ base: "center", sm: "flex-end" }}
+                >
+                  Login
+                </Button>
+              </Link>
+            </Box>
+          </HStack>
         </Box>
       </Container>
     </Center>

@@ -39,7 +39,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <meta httpEquiv="refresh" content="0; url=/javascript" />
         </noscript>
       </Head>
-      <body className={inter.className}>
+      <body className={inter.className} style={{ overflowX: "hidden", maxWidth: "100vw" }}>
         <Script
           id="outseta-config"
           strategy="beforeInteractive"
