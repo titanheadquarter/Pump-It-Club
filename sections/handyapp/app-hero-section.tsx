@@ -65,7 +65,7 @@ export const AppHeroSection = () => {
       <Box
         minH="100vh"
         // Enhanced gradient with better color transitions
-        bg="linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 25%, #2d3e2d 50%, #4a6741 70%, #e8f5e8 90%, #ffffff 100%)"
+        bg="linear-gradient(180deg, #0a0a0a 0%, #1d3a1d 25%, #1d3a1d 50%, #3d6b3d 70%, #e8ffe8 90%, #ffffff 100%)"
         position="relative"
         overflow="hidden"
         pb="0"
@@ -184,7 +184,7 @@ export const AppHeroSection = () => {
                     letterSpacing="tighter"
                     maxW="5xl"
                     css={{
-                      textShadow: '0 4px 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(34, 197, 94, 0.2)'
+                      textShadow: '0 4px 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(107, 192, 31, 0.2)'
                     }}
                   >
                     Alles was du für deinen{' '}
@@ -193,11 +193,11 @@ export const AppHeroSection = () => {
                       position="relative"
                       display="inline-block"
                       css={{
-                        background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
+                        background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 50%, #4F9017 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text',
-                        filter: 'drop-shadow(0 0 12px rgba(34, 197, 94, 0.5))',
+                        filter: 'drop-shadow(0 0 12px rgba(107, 192, 31, 0.5))',
                         '&::after': {
                           content: '""',
                           position: 'absolute',
@@ -205,10 +205,10 @@ export const AppHeroSection = () => {
                           left: 0,
                           right: 0,
                           height: { base: '2px', md: '3px', lg: '4px' },
-                          background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                          background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 100%)',
                           borderRadius: '9999px',
                           transform: 'scaleX(0)',
-                          boxShadow: '0 0 10px #22c55e',
+                          boxShadow: '0 0 10px #6BC01F',
                           animation: isLoaded ? 'scaleX 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards' : undefined
                         }
                       }}
@@ -216,7 +216,7 @@ export const AppHeroSection = () => {
                       Traumkörper
                     </Text>
                     {' '}benötigst,{' '}
-                    <Text as="span" color="green.300">
+                    <Text as="span" color="#6BC01F">
                       übersichtlich in einer App!
                     </Text>
                   </Heading>
@@ -232,7 +232,7 @@ export const AppHeroSection = () => {
                     opacity={0.9}
                   >
                     Mit Pump It Club hast du deine Ernährung, dein Training und deinen Fortschritt immer im Blick.{' '}
-                    <Text as="span" color="green.300" fontWeight="semibold">
+                    <Text as="span" color="#6BC01F" fontWeight="semibold">
                       Erreiche deine Ziele schneller und effizienter
                     </Text>{' '}
                     mit der App, die alles vereint.
@@ -243,7 +243,7 @@ export const AppHeroSection = () => {
                     <Heading
                       as="h3"
                       fontSize={{ base: 'sm', md: 'md' }}
-                      color="green.300"
+                      color="#6BC01F"
                       fontWeight="semibold"
                       textTransform="uppercase"
                       letterSpacing="wide"
@@ -294,12 +294,12 @@ export const AppHeroSection = () => {
                       
                       transition="all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
                       css={{
-                        background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-                        boxShadow: '0 8px 25px -4px rgba(34, 197, 94, 0.4), 0 0 20px -4px rgba(34, 197, 94, 0.2)',
+                        background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 100%)',
+                        boxShadow: '0 8px 25px -4px rgba(107, 192, 31, 0.4), 0 0 20px -4px rgba(107, 192, 31, 0.2)',
                         _hover: {
-                          background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)',
+                          background: 'linear-gradient(135deg, #6BC01F 0%, #4F9017 100%)',
                           transform: 'translateY(-3px) scale(1.02)',
-                          boxShadow: '0 12px 35px -4px rgba(34, 197, 94, 0.5), 0 0 30px -4px rgba(34, 197, 94, 0.3)',
+                          boxShadow: '0 12px 35px -4px rgba(107, 192, 31, 0.5), 0 0 30px -4px rgba(107, 192, 31, 0.3)',
                         },
                         _active: {
                           transform: 'translateY(-1px) scale(1.01)',
@@ -317,12 +317,12 @@ export const AppHeroSection = () => {
                       
                       transition="all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
                       css={{
-                        background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-                        boxShadow: '0 8px 25px -4px rgba(34, 197, 94, 0.4), 0 0 20px -4px rgba(34, 197, 94, 0.2)',
+                        background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 100%)',
+                        boxShadow: '0 8px 25px -4px rgba(107, 192, 31, 0.4), 0 0 20px -4px rgba(107, 192, 31, 0.2)',
                         _hover: {
-                          background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)',
+                          background: 'linear-gradient(135deg, #6BC01F 0%, #4F9017 100%)',
                           transform: 'translateY(-3px) scale(1.02)',
-                          boxShadow: '0 12px 35px -4px rgba(34, 197, 94, 0.5), 0 0 30px -4px rgba(34, 197, 94, 0.3)',
+                          boxShadow: '0 12px 35px -4px rgba(107, 192, 31, 0.5), 0 0 30px -4px rgba(107, 192, 31, 0.3)',
                         },
                         _active: {
                           transform: 'translateY(-1px) scale(1.01)',

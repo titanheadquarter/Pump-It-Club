@@ -223,8 +223,8 @@ export const HeroCard = ({
                 boxShadow={
                   highlightGreen
                     ? selected
-                      ? "0 1px 6px -2px rgba(0, 0, 0, 0.04), 0 2px 12px -4px rgba(0, 0, 0, 0.03), 0 0 0 0.5px rgba(255, 255, 255, 0.08) inset, 0 0 16px -4px rgba(34, 197, 94, 0.2)"
-                      : "0 1px 4px -2px rgba(0, 0, 0, 0.03), 0 0 0 0.5px rgba(255, 255, 255, 0.04) inset, 0 0 8px -4px rgba(34, 197, 94, 0.1)"
+                      ? "0 1px 6px -2px rgba(0, 0, 0, 0.04), 0 2px 12px -4px rgba(0, 0, 0, 0.03), 0 0 0 0.5px rgba(255, 255, 255, 0.08) inset, 0 0 16px -4px rgba(107, 192, 31, 0.2)"
+                      : "0 1px 4px -2px rgba(0, 0, 0, 0.03), 0 0 0 0.5px rgba(255, 255, 255, 0.04) inset, 0 0 8px -4px rgba(107, 192, 31, 0.1)"
                     : selected
                     ? "0 1px 6px -2px rgba(0, 0, 0, 0.04), 0 2px 12px -4px rgba(0, 0, 0, 0.03), 0 0 0 0.5px rgba(255, 255, 255, 0.08) inset"
                     : "0 1px 4px -2px rgba(0, 0, 0, 0.03), 0 0 0 0.5px rgba(255, 255, 255, 0.04) inset"
@@ -248,8 +248,8 @@ export const HeroCard = ({
                     : "border.emphasized/70",
                   boxShadow: highlightGreen
                     ? selected
-                      ? "0 2px 10px -2px rgba(0, 0, 0, 0.06), 0 4px 20px -4px rgba(0, 0, 0, 0.04), 0 0 0 0.5px rgba(255, 255, 255, 0.12) inset, 0 0 20px -4px rgba(34, 197, 94, 0.25)"
-                      : "0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(255, 255, 255, 0.06) inset, 0 0 12px -4px rgba(34, 197, 94, 0.15)"
+                      ? "0 2px 10px -2px rgba(0, 0, 0, 0.06), 0 4px 20px -4px rgba(0, 0, 0, 0.04), 0 0 0 0.5px rgba(255, 255, 255, 0.12) inset, 0 0 20px -4px rgba(107, 192, 31, 0.25)"
+                      : "0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(255, 255, 255, 0.06) inset, 0 0 12px -4px rgba(107, 192, 31, 0.15)"
                     : selected
                     ? "0 2px 10px -2px rgba(0, 0, 0, 0.06), 0 4px 20px -4px rgba(0, 0, 0, 0.04), 0 0 0 0.5px rgba(255, 255, 255, 0.12) inset"
                     : "0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(255, 255, 255, 0.06) inset",

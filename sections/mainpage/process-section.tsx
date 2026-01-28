@@ -189,7 +189,7 @@ export const ProcessSection = ({
         "Wir kommen deinem Ziel entgegen",
         "Ich bin immer für dich erreichbar"
       ],
-      imageSrc: "/applandingpage/phase-2-mentoring.webp",
+      imageSrc: "/landingpage/landingpage2.webp",
       imageAlt: "Live-Mentoring und persönliche Betreuung Phase 2",
     },
     {
@@ -200,7 +200,7 @@ export const ProcessSection = ({
         "Mehr Freiheit durch Ergebnisse",
         "Klarer Weg zu deinem Ziel"
       ],
-      imageSrc: "/applandingpage/phase-3-mastery.webp",
+      imageSrc: "/landingpage/landingpage3.webp",
       imageAlt: "Trading Mastery und Ergebnisse Phase 3",
     }
   ]

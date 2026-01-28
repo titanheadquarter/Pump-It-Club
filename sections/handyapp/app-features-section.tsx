@@ -281,11 +281,11 @@ export const AppFeaturesSection = () => {
                   position="relative"
                   display="inline-block"
                   css={{
-                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
+                    background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 50%, #4F9017 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 15px rgba(34, 197, 94, 0.5))',
+                    filter: 'drop-shadow(0 0 15px rgba(107, 192, 31, 0.5))',
                     '&::after': {
                       content: '""',
                       position: 'absolute',
@@ -293,10 +293,10 @@ export const AppFeaturesSection = () => {
                       left: 0,
                       right: 0,
                       height: { base: '3px', md: '4px', lg: '5px' },
-                      background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                      background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 100%)',
                       borderRadius: '9999px',
                       transform: 'scaleX(0)',
-                      boxShadow: '0 0 15px #22c55e, 0 0 30px rgba(34, 197, 94, 0.4)',
+                      boxShadow: '0 0 15px #6BC01F, 0 0 30px rgba(107, 192, 31, 0.4)',
                       animation: isLoaded ? 'scaleX 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s forwards' : undefined
                     },
                     '@keyframes scaleX': {
@@ -320,7 +320,7 @@ export const AppFeaturesSection = () => {
                 mx="auto"
               >
                 Entdecke eine neue Dimension des Fitness-Trackings mit Features, die{' '}
-                <Text as="span" color="green.600" fontWeight="bold">
+                <Text as="span" color="#6BC01F" fontWeight="bold">
                   wirklich einen Unterschied machen
                 </Text>
               </Heading>

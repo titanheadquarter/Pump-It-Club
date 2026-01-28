@@ -75,7 +75,7 @@ export const AppFeaturesVisualSection = () => {
                 <Text
                   as="span"
                   css={{
-                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
+                    background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 50%, #4F9017 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   
@@ -96,7 +96,7 @@ export const AppFeaturesVisualSection = () => {
                 mx="auto"
               >
                 Erlebe die Power unserer App mit{' '}
-                <Text as="span" color="green.600" fontWeight="bold">
+                <Text as="span" color="#6BC01F" fontWeight="bold">
                   intelligenten Features
                 </Text>{' '}
                 für maximale Effizienz

@@ -92,7 +92,7 @@ export const FounderContent = ({
             textAlign="center"
             mb={{ base: "4", md: "5" }}
             css={{
-              background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
+              background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 50%, #4F9017 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -173,17 +173,17 @@ export const FounderContent = ({
             <Text 
               as="span"
               css={{
-                background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-                filter: 'drop-shadow(0 0 8px rgba(34, 197, 94, 0.3))'
+                filter: 'drop-shadow(0 0 8px rgba(107, 192, 31, 0.3))'
               }}
             >
               UNSERE MISSION:
             </Text>{' '}
             anderen zeigen, wie sie strukturiert und professionell ihre eigene{' '}
-            <Text as="span" color="green.600" fontWeight="bold">Fitness-Transformation</Text>{' '}
+            <Text as="span" color="#6BC01F" fontWeight="bold">Fitness-Transformation</Text>{' '}
             starten können!
           </Heading>
         </Box>
