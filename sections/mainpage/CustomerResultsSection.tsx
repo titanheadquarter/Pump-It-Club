@@ -273,22 +273,7 @@ export const CustomerResultsSection = ({
       achievement: "+15kg Muskeln",
       testimonial: "Ich habe mich immer geschämt, weil ich so dünn war. Jetzt bin ich stolz auf meinen Körper und fühle mich viel sicherer. Ich hätte nie gedacht, dass ich so schnell solche Ergebnisse sehen würde. Das Coaching war genau das, was ich brauchte."
     },
-    {
-      beforeImageSrc: "/macher.webp",
-      afterImageSrc: "/macher.webp",
-      customerName: "Sarah L.", 
-      timeframe: "4 Monate",
-      achievement: "-8kg, Defined Look",
-      testimonial: "Endlich habe ich meinen Traumkörper erreicht. Die Unterstützung war durchgehend professionell und motivierend."
-    },
-    {
-      beforeImageSrc: "/macher.webp",
-      afterImageSrc: "/macher.webp",
-      customerName: "Tim K.",
-      timeframe: "8 Monate", 
-      achievement: "-22kg, Neue Lebensqualität",
-      testimonial: "Mein Leben hat sich komplett verändert. Nicht nur körperlich, sondern auch mental bin ich stärker geworden."
-    }
+
   ]
 }: CustomerResultsSectionProps) => {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -341,7 +326,7 @@ export const CustomerResultsSection = ({
                   position="relative"
                   display="inline-block"
                   css={{
-                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
+                    background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 50%, #4F9017 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -352,7 +337,7 @@ export const CustomerResultsSection = ({
                       left: 0,
                       right: 0,
                       height: { base: '3px', md: '4px', lg: '6px' },
-                      background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                      background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 100%)',
                       borderRadius: '9999px',
                       transform: 'scaleX(0)',
                       animation: isLoaded ? 'scaleX 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s forwards' : undefined
@@ -378,74 +363,12 @@ export const CustomerResultsSection = ({
                 lineHeight="tall"
               >
                 Sieh selbst, was mit dem richtigen Coaching und{' '}
-                <Text as="span" color="green.600" fontWeight="bold">echter Unterstützung</Text>{' '}
+                <Text as="span" color="#6BC01F" fontWeight="bold">echter Unterstützung</Text>{' '}
                 möglich ist
               </Heading>
             </VStack>
 
-            {/* Statistics Row */}
-            <HStack
-              justify="center"
-              gap={{ base: 4, md: 8 }}
-              wrap="wrap"
-              opacity={isLoaded ? 1 : 0}
-              transform={isLoaded ? 'translateY(0)' : 'translateY(30px)'}
-              transition="all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s"
-            >
-              <VStack gap="1" align="center">
-                <Text
-                  fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
-                  fontWeight="900"
-                  css={{
-                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  500+
-                </Text>
-                <Text fontSize="sm" color="gray.600" fontWeight="medium" textAlign="center">
-                  Erfolgreiche<br />Transformationen
-                </Text>
-              </VStack>
-
-              <VStack gap="1" align="center">
-                <Text
-                  fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
-                  fontWeight="900"
-                  css={{
-                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  -18kg
-                </Text>
-                <Text fontSize="sm" color="gray.600" fontWeight="medium" textAlign="center">
-                  Durchschnittlicher<br />Gewichtsverlust
-                </Text>
-              </VStack>
-
-              <VStack gap="1" align="center">
-                <Text
-                  fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
-                  fontWeight="900"
-                  css={{
-                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  97%
-                </Text>
-                <Text fontSize="sm" color="gray.600" fontWeight="medium" textAlign="center">
-                  Zufriedenheits-<br />rate
-                </Text>
-              </VStack>
-            </HStack>
+            
 
             {/* Customer Results - Alternating Layout */}
             <VStack

@@ -35,7 +35,7 @@ export const HeroSection = ({
   return (
     <Box
       minH="100vh"
-      bg="linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 25%, #2d3e2d 50%, #4a6741 70%, #e8f5e8 90%, #ffffff 100%)"
+      bg="linear-gradient(180deg, #0a0a0a 0%, #1d3a1d 25%, #1d3a1d 50%, #3d6b3d 70%, #e8ffe8 90%, #ffffff 100%)"
       position="relative"
       overflow="hidden"
       pb="0"
@@ -103,7 +103,7 @@ export const HeroSection = ({
                   position="relative"
                   display="inline-block"
                   css={{
-                    background: 'linear-gradient(135deg,rgb(21, 227, 35) 50%, #16a34a 100%, #15803d 100%)',
+                    background: 'linear-gradient(135deg, #6BC01F 50%, #5AA019 100%, #4F9017 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',

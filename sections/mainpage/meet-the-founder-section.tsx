@@ -82,7 +82,7 @@ export const MeetTheFounderSection = ({
                   position="relative"
                   display="inline-block"
                   css={{
-                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
+                    background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 50%, #4F9017 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -93,7 +93,7 @@ export const MeetTheFounderSection = ({
                       left: 0,
                       right: 0,
                       height: { base: '2px', md: '3px', lg: '4px' },
-                      background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                      background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 100%)',
                       borderRadius: '9999px',
                       transform: 'scaleX(0)',
                       animation: isLoaded ? 'scaleX 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards' : undefined
@@ -117,7 +117,7 @@ export const MeetTheFounderSection = ({
                 lineHeight="tall"
               >
                 Dein persönlicher Fitness Coach für{' '}
-                <Text as="span" color="green.600" fontWeight="bold">echte Transformationen</Text>
+                <Text as="span" color="#6BC01F" fontWeight="bold">echte Transformationen</Text>
               </Heading>
             </VStack>
 
