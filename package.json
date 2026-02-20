@@ -9,6 +9,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
     "@chakra-ui/react": "^3.2.2",
     "@emotion/react": "^11.13.5",
     "@phosphor-icons/react": "^2.1.7",

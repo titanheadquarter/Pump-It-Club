@@ -12,5 +12,9 @@ export const authConfig = {
       uid: "ZmNMD7W2",
       label: "Pro",
     },
+    freeFunnelKurs: {
+      uid: "jW70b0mq",
+      label: "Free-Funnel-Kurs",
+    },
   },
 };

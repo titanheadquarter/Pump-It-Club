@@ -18,11 +18,11 @@ interface FounderContentProps {
 export const FounderContent = ({
   achievements = [
     "Vollzeit Fitnesscoach",
-    "Vielen Menschen dabei geholfen ihre Körperlichen und Mentalen Grenzen zu überschreiten",
-    "Über 220KG Kreuzheben",
+    "Vielen Menschen geholfen, körperliche und mentale Grenzen zu überschreiten",
+    "Über 220 kg Kreuzheben",
     "Diverse Trainerzertifikate absolviert",
   ],
-  missionText = "UNSERE MISSION: anderen zeigen, wie sie strukturiert und professionell ihre eigene Trading-Reise starten können!",
+  missionText = "Anderen zeigen, wie sie strukturiert ihre eigene Fitness-Transformation starten.",
 }: FounderContentProps) => {
   return (
     <Box
@@ -88,15 +88,9 @@ export const FounderContent = ({
             as="h5"
             fontSize={{ base: "lg", md: "xl" }}
             fontWeight="700"
-            color="gray.800"
+            color="green.600"
             textAlign="center"
             mb={{ base: "4", md: "5" }}
-            css={{
-              background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 50%, #4F9017 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
           >
             3 Jahre später...
           </Heading>
@@ -170,21 +164,12 @@ export const FounderContent = ({
             textAlign="center"
             lineHeight="tall"
           >
-            <Text 
-              as="span"
-              css={{
-                background: 'linear-gradient(135deg, #6BC01F 0%, #5AA019 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                filter: 'drop-shadow(0 0 8px rgba(107, 192, 31, 0.3))'
-              }}
-            >
-              UNSERE MISSION:
-            </Text>{' '}
-            anderen zeigen, wie sie strukturiert und professionell ihre eigene{' '}
-            <Text as="span" color="#6BC01F" fontWeight="bold">Fitness-Transformation</Text>{' '}
-            starten können!
+            <Text as="span" color="green.600" fontWeight="bold">
+              Meine Mission:
+            </Text>{" "}
+            anderen zeigen, wie sie strukturiert ihre eigene{" "}
+            <Text as="span" color="green.600" fontWeight="bold">Fitness-Transformation</Text>{" "}
+            starten können.
           </Heading>
         </Box>
 
