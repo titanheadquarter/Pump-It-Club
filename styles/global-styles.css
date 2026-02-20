@@ -1,0 +1,29 @@
+/* Global Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+.great-vibes-regular {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.arrow-bounce-down {
+  animation: bounce-down 1.5s ease-in-out infinite;
+}
+
+.problem-cards-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.problem-cards-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 9999px;
+}
+.problem-cards-scroll::-webkit-scrollbar-track {
+  background: #edf2f7;
+}

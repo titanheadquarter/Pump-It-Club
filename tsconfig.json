@@ -20,7 +20,6 @@
     "customConditions": ["source"],
     "plugins": [{ "name": "next" }],
     "paths": {
-      "@chakra-ui/react": ["../../packages/react/src"],
       "@/*": ["./*"]
     }
   },
