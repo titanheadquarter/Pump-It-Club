@@ -15,6 +15,9 @@ import {
   Tabs,
   Badge,
   SimpleGrid,
+  useToast,
+  Spinner,
+  Alert,
 } from "@chakra-ui/react";
 import { Section } from "@/components/layout/section";
 import {
@@ -26,29 +29,104 @@ import {
   CheckCircle,
   Clock,
 } from "@phosphor-icons/react";
-import {
-  type FAQQuestion,
-  type UserQuestion,
-  type FAQAnswer,
-  initialFAQs,
-  categoryLabels,
-  formatDate,
-} from "./data";
 import { FaqItem } from "@/components/ui/handyapp/faq-item";
+import { useAuth } from "@/components/provider/auth-provider";
+
+// Types für die API
+interface FAQ {
+  id: string;
+  slug: string;
+  title: string;
+  content: string;
+  summary?: string;
+  category_id?: string;
+  is_published: boolean;
+  created_by?: string;
+  created_at: string;
+  updated_at: string;
+  comment_count: number;
+  like_count: number;
+  view_count: number;
+  faq_categories?: {
+    name: string;
+    slug: string;
+  };
+  profiles?: {
+    full_name?: string;
+  };
+}
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  sort_order: number;
+}
+
+interface UserQuestion {
+  id: string;
+  question: string;
+  category: string;
+  author: string;
+  createdAt: string;
+  answers: { id: string; answer: string; author: string; createdAt: string; helpful: number; isAccepted: boolean }[];
+  views: number;
+  status: "open" | "answered" | "closed";
+}
 
 export default function FAQ() {
-  const [faqs, setFaqs] = useState<FAQQuestion[]>(initialFAQs);
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [userQuestions, setUserQuestions] = useState<UserQuestion[]>([]);
   const [activeTab, setActiveTab] = useState<"faq" | "forum" | "ask">("faq");
-  const [selectedCategory, setSelectedCategory] = useState<FAQQuestion["category"] | "all">("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [newQuestion, setNewQuestion] = useState({
     question: "",
-    category: "allgemein" as FAQQuestion["category"],
+    category: "allgemein",
     description: "",
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Lade gespeicherte Fragen aus localStorage
+  const toast = useToast();
+  const { getAccessToken } = useAuth();
+
+  // Lade FAQs und Kategorien von der API
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Lade FAQs
+        const faqResponse = await fetch("/api/faq?published=true");
+        if (!faqResponse.ok) {
+          throw new Error("Failed to load FAQs");
+        }
+        const faqData = await faqResponse.json();
+        setFaqs(faqData.faqs || []);
+
+        // Lade Kategorien
+        const catResponse = await fetch("/api/faq/categories");
+        if (!catResponse.ok) {
+          throw new Error("Failed to load categories");
+        }
+        const catData = await catResponse.json();
+        setCategories(catData.categories || []);
+
+      } catch (err) {
+        console.error("Error loading data:", err);
+        setError(err instanceof Error ? err.message : "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  // Lade gespeicherte Fragen aus localStorage (für Demo-Zwecke)
   useEffect(() => {
     const saved = localStorage.getItem("userQuestions");
     if (saved) {
@@ -63,20 +141,35 @@ export default function FAQ() {
     }
   }, [userQuestions]);
 
+  // Erstelle Kategorie-Mapping
+  const categoryLabels = useMemo(() => {
+    const labels: Record<string, string> = { all: "Alle" };
+    categories.forEach(cat => {
+      labels[cat.slug] = cat.name;
+    });
+    return labels;
+  }, [categories]);
+
+  // Erstelle Kategorie-Array für Filter-Buttons
+  const categoryOptions = useMemo(() => {
+    return ["all", ...categories.map(cat => cat.slug)];
+  }, [categories]);
+
   // Filtere FAQs nach Kategorie und Suche
   const filteredFAQs = useMemo(() => {
     let filtered = faqs;
 
     if (selectedCategory !== "all") {
-      filtered = filtered.filter((faq) => faq.category === selectedCategory);
+      filtered = filtered.filter((faq) => faq.faq_categories?.slug === selectedCategory);
     }
 
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
         (faq) =>
-          faq.question.toLowerCase().includes(query) ||
-          faq.answer.toLowerCase().includes(query)
+          faq.title.toLowerCase().includes(query) ||
+          faq.content.toLowerCase().includes(query) ||
+          faq.summary?.toLowerCase().includes(query)
       );
     }
 
@@ -160,14 +253,47 @@ export default function FAQ() {
     );
   };
 
-  const categories: (FAQQuestion["category"] | "all")[] = [
-    "all",
-    "allgemein",
-    "training",
-    "ernaehrung",
-    "app",
-    "account",
-  ];
+
+  if (loading) {
+    return (
+      <Section header>
+        <Stack gap="6">
+          <Stack gap="2">
+            <Heading>FAQ & Forum</Heading>
+            <Text color="green.700">
+              Finde Antworten auf häufige Fragen oder stelle deine eigene Frage in unserem Forum.
+            </Text>
+          </Stack>
+          <VStack gap="4" py="8">
+            <Spinner size="lg" color="green.500" />
+            <Text color="gray.600">Lade FAQs...</Text>
+          </VStack>
+        </Stack>
+      </Section>
+    );
+  }
+
+  if (error) {
+    return (
+      <Section header>
+        <Stack gap="6">
+          <Stack gap="2">
+            <Heading>FAQ & Forum</Heading>
+            <Text color="green.700">
+              Finde Antworten auf häufige Fragen oder stelle deine eigene Frage in unserem Forum.
+            </Text>
+          </Stack>
+          <Alert.Root status="error">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>Fehler</Alert.Title>
+              <Alert.Description>Fehler beim Laden der FAQs: {error}</Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
+        </Stack>
+      </Section>
+    );
+  }
 
   return (
     <Section header>
@@ -199,7 +325,7 @@ export default function FAQ() {
               </HStack>
 
               <HStack gap="2" flexWrap="wrap">
-                {categories.map((cat) => (
+                {categoryOptions.map((cat) => (
                   <Button
                     key={cat}
                     size="sm"
@@ -207,7 +333,7 @@ export default function FAQ() {
                     colorPalette="green"
                     onClick={() => setSelectedCategory(cat)}
                   >
-                    {cat === "all" ? "Alle" : categoryLabels[cat]}
+                    {categoryLabels[cat]}
                   </Button>
                 ))}
               </HStack>
@@ -241,26 +367,25 @@ export default function FAQ() {
                               <HStack justify="space-between" align="start">
                                 <HStack gap="2" flex="1">
                                   <Badge colorPalette="green" variant="subtle">
-                                    {categoryLabels[faq.category]}
+                                    {faq.faq_categories?.name || "Allgemein"}
                                   </Badge>
-                                  {faq.tags?.map((tag) => (
-                                    <Badge key={tag} variant="outline" colorPalette="gray" size="sm">
-                                      {tag}
-                                    </Badge>
-                                  ))}
                                 </HStack>
                                 <HStack gap="3" fontSize="xs" color="green.600">
                                   <HStack gap="1">
                                     <Eye size={14} />
-                                    <Text>{faq.views}</Text>
+                                    <Text>{faq.view_count}</Text>
                                   </HStack>
                                   <HStack gap="1">
                                     <ThumbsUp size={14} />
-                                    <Text>{faq.helpful}</Text>
+                                    <Text>{faq.like_count}</Text>
+                                  </HStack>
+                                  <HStack gap="1">
+                                    <ChatCircle size={14} />
+                                    <Text>{faq.comment_count}</Text>
                                   </HStack>
                                 </HStack>
                               </HStack>
-                              <FaqItem question={faq.question} answer={faq.answer} />
+                              <FaqItem question={faq.title} answer={faq.content} />
                             </Stack>
                           </Box>
                         </Box>
@@ -447,15 +572,15 @@ export default function FAQ() {
                         Kategorie
                       </Text>
                       <SimpleGrid columns={{ base: 2, md: 5 }} gap="2">
-                        {(["allgemein", "training", "ernaehrung", "app", "account"] as const).map((cat) => (
+                        {categories.map((cat) => (
                           <Button
-                            key={cat}
+                            key={cat.slug}
                             size="sm"
-                            variant={newQuestion.category === cat ? "solid" : "outline"}
+                            variant={newQuestion.category === cat.slug ? "solid" : "outline"}
                             colorPalette="green"
-                            onClick={() => setNewQuestion({ ...newQuestion, category: cat })}
+                            onClick={() => setNewQuestion({ ...newQuestion, category: cat.slug })}
                           >
-                            {categoryLabels[cat]}
+                            {cat.name}
                           </Button>
                         ))}
                       </SimpleGrid>

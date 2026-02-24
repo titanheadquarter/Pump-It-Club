@@ -19,6 +19,10 @@ interface OutsetaAuth {
 interface Outseta {
   chat: OutsetaChat;
   auth: OutsetaAuth;
+  getAccessToken?: () => string | null;
+  setAccessToken?: (token: string) => void;
+  getUser?: () => Promise<unknown>;
+  on?: (event: string, handler: () => void) => void;
 }
 
 declare global {

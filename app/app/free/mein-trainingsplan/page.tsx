@@ -26,7 +26,16 @@ import { Section } from "@/components/layout/section";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Link } from "@/components/ui/link";
 import { Calendar, Plus, Pencil, X, CalendarBlank, Lock } from "@phosphor-icons/react";
-import { trainingPlans, getTrainingPlanById, type TrainingPlan } from "../trainingsplan/data";
+import { useAuth } from "@/components/provider/auth-provider";
+// Define types for API response
+interface TrainingPlan {
+  id: string;
+  slug: string;
+  name: string;
+  gender: string | null;
+  description: string;
+  structure: any; // JSON structure with days and exercises
+}
 
 interface Exercise {
   id: string;
@@ -48,6 +57,44 @@ const formatDate = (date: Date): string => {
 const formatDateDisplay = (dateString: string): string => {
   const date = new Date(dateString);
   return date.toLocaleDateString("de-DE", { weekday: "short", day: "numeric", month: "short" });
+};
+
+// Erstelle Trainingstage aus Plan-Struktur
+const createTrainingDaysFromPlan = (plan: TrainingPlan): TrainingDay[] => {
+  if (!plan.structure || !plan.structure.days) return [];
+
+  const days: TrainingDay[] = [];
+  const startDate = new Date();
+
+  // Für jeden Tag in der Woche
+  plan.structure.days.forEach((day: any, index: number) => {
+    // Erstelle Datum für diesen Wochentag (z.B. Montag = 1, Dienstag = 2, etc.)
+    const dayOffset = (day.key === "montag" ? 1 :
+                      day.key === "dienstag" ? 2 :
+                      day.key === "mittwoch" ? 3 :
+                      day.key === "donnerstag" ? 4 :
+                      day.key === "freitag" ? 5 :
+                      day.key === "samstag" ? 6 : 0) - startDate.getDay();
+
+    const workoutDate = new Date(startDate);
+    workoutDate.setDate(startDate.getDate() + (dayOffset >= 0 ? dayOffset : dayOffset + 7));
+
+    // Parse exercises from structure
+    const exercises: Exercise[] = day.exercises.map((ex: any) => ({
+      id: `${day.key}-${ex.name}`.toLowerCase().replace(/\s+/g, '-'),
+      name: ex.name,
+      sets: ex.sets.length, // Number of sets
+      reps: parseInt(ex.sets[0].reps.split('–')[0] || ex.sets[0].reps), // First rep range or single value
+      weight: 0,
+    }));
+
+    days.push({
+      date: formatDate(workoutDate),
+      exercises,
+    });
+  });
+
+  return days;
 };
 
 const getDaysInMonth = (date: Date): Date[] => {
@@ -122,7 +169,9 @@ const createTrainingSchedule = (plan: TrainingPlan, startDate: Date = new Date()
 };
 
 export default function MeinTrainingsplan() {
+  const { getAccessToken } = useAuth();
   const [assignedPlans, setAssignedPlans] = useState<string[]>([]);
+  const [currentPlan, setCurrentPlan] = useState<TrainingPlan | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [trainingDays, setTrainingDays] = useState<TrainingDay[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -136,39 +185,53 @@ export default function MeinTrainingsplan() {
     weight: 0,
   });
 
-  // Lade zugewiesene Pläne und erstelle automatisch Trainingstage
+  // Lade zugewiesenen Plan von API
   useEffect(() => {
-    const stored = localStorage.getItem("assignedTrainingPlans");
-    if (stored) {
-      const planIds = JSON.parse(stored) as string[];
-      setAssignedPlans(planIds);
-      
-      // Erstelle Trainingstage für alle zugewiesenen Pläne
-      const allTrainingDays: TrainingDay[] = [];
-      planIds.forEach((planId) => {
-        const plan = getTrainingPlanById(planId);
-        if (plan) {
-          const schedule = createTrainingSchedule(plan);
-          allTrainingDays.push(...schedule);
+    const token = getAccessToken();
+    if (!token) return;
+
+    fetch("/api/training-plans/my", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
         }
-      });
-      
-      // Lade bereits vorhandene Trainingstage aus localStorage
-      const storedDays = localStorage.getItem("myTrainingDays");
-      if (storedDays) {
-        const existingDays = JSON.parse(storedDays) as TrainingDay[];
-        // Merge: Überschreibe nur, wenn noch nicht vorhanden
-        const merged = [...existingDays];
-        allTrainingDays.forEach((day) => {
-          if (!merged.find((d) => d.date === day.date)) {
-            merged.push(day);
+        return { plan: null };
+      })
+      .then((data) => {
+        if (data.plan) {
+          setAssignedPlans([data.plan.id]);
+          setCurrentPlan(data.plan);
+
+          // Erstelle Trainingstage basierend auf der Plan-Struktur
+          const trainingDays = createTrainingDaysFromPlan(data.plan);
+          setTrainingDays(trainingDays);
+
+          // Lade bereits vorhandene Trainingstage aus localStorage (für Kompatibilität)
+          const storedDays = localStorage.getItem("myTrainingDays");
+          if (storedDays) {
+            const existingDays = JSON.parse(storedDays) as TrainingDay[];
+            // Merge: Überschreibe nur, wenn noch nicht vorhanden
+            const merged = [...existingDays];
+            trainingDays.forEach((day) => {
+              if (!merged.find((d) => d.date === day.date)) {
+                merged.push(day);
+              }
+            });
+            setTrainingDays(merged);
           }
-        });
-        setTrainingDays(merged);
-      } else {
-        setTrainingDays(allTrainingDays);
-      }
-    }
+        } else {
+          setAssignedPlans([]);
+          setCurrentPlan(null);
+        }
+      })
+      .catch((error) => {
+        console.error("Error loading user's plan:", error);
+        setAssignedPlans([]);
+        setCurrentPlan(null);
+      });
+  }, [getAccessToken]);
   }, []);
 
   // Speichere Trainingstage in localStorage
