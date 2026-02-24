@@ -6,6 +6,7 @@ import {
   createContext,
   useContext,
   useRef,
+  useCallback,
   Suspense,
 } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -20,6 +21,8 @@ interface AuthContextType {
   openLogin: (options?: any) => void;
   openSignup: (options?: any) => void;
   openProfile: (options?: any) => void;
+  /** Für API-Calls: Outseta Access Token (z.B. Kurs-Fortschritt) */
+  getAccessToken: () => string | null;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -143,6 +146,10 @@ function AuthProviderContent({ children }: { children: React.ReactNode }) {
     outsetaRef.current?.profile.open({ tab: "profile", ...options });
   };
 
+  const getAccessToken = useCallback((): string | null => {
+    return outsetaRef.current?.getAccessToken?.() ?? getOutseta()?.getAccessToken?.() ?? null;
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -152,6 +159,7 @@ function AuthProviderContent({ children }: { children: React.ReactNode }) {
         openLogin,
         openSignup,
         openProfile,
+        getAccessToken,
       }}
     >
       {children}

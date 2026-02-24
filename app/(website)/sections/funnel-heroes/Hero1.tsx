@@ -33,7 +33,7 @@ export function Hero1() {
           <Text
             as="span"
             color="green.500"
-            className="great-vibes-regular"
+            className="bebas-neue-regular"
             textDecoration="underline"
             textDecorationColor="green.500"
             style={{ fontSize: "1.8em", marginTop: "-0.35em", display: "inline-block", position: "relative", zIndex: 1 }}
@@ -183,7 +183,7 @@ export function Hero1() {
           </Text>
           <Text fontSize={{ base: "xl", md: "xl" }} color="gray.800" fontWeight="bold" textAlign="center" lineHeight="1em" mt={5}>
             Sichere dir jetzt dein{" "}
-            <Text as="span" className="great-vibes-regular" color="green.600" textDecoration="underline" textDecorationColor="green.600" style={{ fontSize: "1.6em" }} display="block">
+            <Text as="span" className="bebas-neue-regular" color="green.600" textDecoration="underline" textDecorationColor="green.600" style={{ fontSize: "1.6em" }} display="block">
               kostenloses
             </Text>
              Video-Training

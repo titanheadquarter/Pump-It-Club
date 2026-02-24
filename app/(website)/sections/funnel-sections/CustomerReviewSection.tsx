@@ -114,24 +114,29 @@ const reviews = [
 function ReviewCard({
   review,
   index,
+  clientVideoSrcs,
 }: {
   review: (typeof reviews)[0];
   index: number;
+  clientVideoSrcs?: string[];
 }) {
+  const isEven = index % 2 === 0;
+
   return (
     <VStack
-      gap={{ base: 6, md: 8 }}
+      gap={{ base: 6, md: 10 }}
       alignItems="stretch"
       w="full"
-      maxW="800px"
+      maxW={{ base: "full", md: "1200px", lg: "1400px" }}
       mx="auto"
       textAlign={{ base: "center", md: "left" }}
-      pt={index === 0 ? 0 : { base: 10, md: 14 }}
+      pt={index === 0 ? 0 : { base: 12, md: 16 }}
       borderTop={index === 0 ? "none" : "1px solid"}
       borderColor="gray.200"
+      px={{ base: 4, md: 6 }}
     >
-      {/* Video + Headline */}
-      <VStack gap={3} alignItems="center" w="full">
+      {/* Mobile: Vertikal Layout */}
+      <VStack gap={6} alignItems="center" w="full" display={{ base: "flex", md: "none" }}>
         <Heading
           as="h2"
           size={{ base: "lg", md: "xl" }}
@@ -151,7 +156,7 @@ function ReviewCard({
         <Box
           position="relative"
           w="full"
-          maxW={{ base: "200px", sm: "240px" }}
+          maxW={{ base: "280px", sm: "320px" }}
           mx="auto"
           aspectRatio="9/16"
           borderRadius="xl"
@@ -164,21 +169,102 @@ function ReviewCard({
           alignItems="center"
           justifyContent="center"
         >
-          <VStack gap={2} color="gray.500">
-            <Icon as={PlayCircle} boxSize={12} />
-            <Text fontSize="xs" fontWeight="semibold">
-              Video 9:16
-            </Text>
-          </VStack>
+          {clientVideoSrcs?.[index] ? (
+            <video
+              src={clientVideoSrcs[index]}
+              controls
+              controlsList="nodownload"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                borderRadius: "10px"
+              }}
+              playsInline
+            />
+          ) : (
+            <VStack gap={2} color="gray.500">
+              <Icon as={PlayCircle} boxSize={12} />
+              <Text fontSize="xs" fontWeight="semibold">
+                Video 9:16
+              </Text>
+            </VStack>
+          )}
         </Box>
       </VStack>
 
-      {/* Review Content */}
-      <VStack
-        gap={{ base: 4, md: 6 }}
-        alignItems={{ base: "center", md: "flex-start" }}
+      {/* Desktop: Horizontal Layout mit Video links/rechts */}
+      <HStack
+        gap={{ md: 12, lg: 16 }}
+        alignItems="flex-start"
         w="full"
+        display={{ base: "none", md: "flex" }}
+        flexDirection={isEven ? "row" : "row-reverse"}
       >
+        {/* Video Side */}
+        <VStack gap={4} alignItems="center" flex="1" minW="400px">
+          <Heading
+            as="h2"
+            size="xl"
+            fontWeight="extrabold"
+            color="gray.800"
+            lineHeight="tight"
+            textAlign="center"
+          >
+            {review.videoHeadline}{" "}
+            <Text as="span" color="green.600">
+              {review.videoHighlight}
+            </Text>
+          </Heading>
+          <Text fontSize="sm" color="gray.600" maxW="320px" textAlign="center">
+            {review.videoSubline}
+          </Text>
+          <Box
+            position="relative"
+            w="full"
+            maxW="400px"
+            aspectRatio="9/16"
+            borderRadius="xl"
+            overflow="hidden"
+            border="2px solid"
+            borderColor="green.200"
+            bg="gray.200"
+            boxShadow="0 8px 32px rgba(34, 197, 94, 0.2)"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {clientVideoSrcs?.[index] ? (
+              <video
+                src={clientVideoSrcs[index]}
+                controls
+                controlsList="nodownload"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                  borderRadius: "10px"
+                }}
+                playsInline
+              />
+            ) : (
+              <VStack gap={2} color="gray.500">
+                <Icon as={PlayCircle} boxSize={12} />
+                <Text fontSize="xs" fontWeight="semibold">
+                  Video 9:16
+                </Text>
+              </VStack>
+            )}
+          </Box>
+        </VStack>
+
+        {/* Content Side */}
+        <VStack
+          gap={6}
+          alignItems="flex-start"
+          flex="1"
+          minW="400px"
+        >
         <HStack gap={0.5}>
           {[1, 2, 3, 4, 5].map((i) => (
             <Star
@@ -190,16 +276,16 @@ function ReviewCard({
           ))}
         </HStack>
 
-        <HStack gap={3} alignItems="center" flexWrap="wrap" justify={{ base: "center", md: "flex-start" }}>
-          <Avatar.Root size="md">
+        <HStack gap={{ base: 3, md: 4 }} alignItems="center" flexWrap="wrap" justify={{ base: "center", md: "flex-start" }}>
+          <Avatar.Root size={{ base: "lg", md: "md" }}>
             <Avatar.Image src={review.avatar} />
             <Avatar.Fallback name={review.name} />
           </Avatar.Root>
-          <VStack alignItems={{ base: "center", md: "flex-start" }} gap={0} spacing={0}>
-            <Text fontWeight="bold" fontSize="lg" color="gray.800">
+          <VStack alignItems={{ base: "center", md: "flex-start" }} gap={0}>
+            <Text fontWeight="bold" fontSize={{ base: "xl", md: "lg" }} color="gray.800">
               {review.name}
             </Text>
-            <Text fontSize="sm" color="gray.600">
+            <Text fontSize={{ base: "md", md: "sm" }} color="gray.600">
               {review.role}
             </Text>
           </VStack>
@@ -207,10 +293,11 @@ function ReviewCard({
 
         <Heading
           as="h3"
-          size={{ base: "md", md: "lg" }}
+          size={{ base: "lg", md: "xl" }}
           fontWeight="bold"
           color="gray.800"
           lineHeight="tight"
+          maxW={{ base: "full", md: "600px" }}
         >
           {review.mainHeading}
         </Heading>
@@ -220,10 +307,10 @@ function ReviewCard({
             {review.ergebnisseLabel ?? "Seine Ergebnisse"}
           </Heading>
           <SimpleGrid
-            columns={3}
-            gap={3}
+            columns={{ base: 1, sm: 3 }}
+            gap={{ base: 4, md: 6 }}
             w="full"
-            maxW={{ base: "320px", sm: "400px" }}
+            maxW={{ base: "full", sm: "480px", md: "600px" }}
             mx={{ base: "auto", md: "0" }}
           >
             {review.successCards.map((card, i) => (
@@ -255,38 +342,177 @@ function ReviewCard({
               </Card.Root>
             ))}
           </SimpleGrid>
-          <Stack
-            gap={1}
+          <VStack
+            gap={2}
             alignItems={{ base: "center", md: "flex-start" }}
             w="full"
           >
             {review.checks.map((line, i) => (
-              <HStack key={i} gap={2} flexWrap="wrap" justify={{ base: "center", md: "flex-start" }}>
-                <Icon as={CheckCircle} color="green.500" boxSize={4} />
-                <Text fontSize="xs" color="gray.700">{line}</Text>
+              <HStack key={i} gap={3} flexWrap="wrap" justify={{ base: "center", md: "flex-start" }}>
+                <Icon as={CheckCircle} color="green.500" boxSize={{ base: 5, md: 4 }} />
+                <Text fontSize={{ base: "sm", md: "xs" }} color="gray.700" textAlign={{ base: "center", md: "left" }}>{line}</Text>
               </HStack>
             ))}
-          </Stack>
+          </VStack>
         </VStack>
 
-        <VStack alignItems={{ base: "center", md: "flex-start" }} gap={2} w="full">
-          <Heading as="h4" size="sm" fontWeight="semibold" color="gray.700">
+        <VStack alignItems={{ base: "center", md: "flex-start" }} gap={3} w="full">
+          <Heading as="h4" size={{ base: "md", md: "sm" }} fontWeight="semibold" color="gray.700">
             Vorher
           </Heading>
-          <Text fontSize="sm" color="gray.600" lineHeight="tall" textAlign={{ base: "center", md: "left" }}>
+          <Text fontSize={{ base: "md", md: "sm" }} color="gray.600" lineHeight="tall" textAlign={{ base: "center", md: "left" }} maxW={{ base: "full", md: "600px" }}>
             {review.vorher}
           </Text>
         </VStack>
 
-        <HStack gap={4} pt={2} flexWrap="wrap" justify={{ base: "center", md: "flex-start" }}>
-          <Link href="#" textExternal fontSize="sm">
-            <Icon as={LinkedinLogo} /> LinkedIn
+          <HStack gap={4} pt={3} flexWrap="wrap" justify="flex-start">
+            <Link href="#" textExternal fontSize="sm">
+              <HStack gap={2}>
+                <Icon as={LinkedinLogo} boxSize={4} />
+                <Text>LinkedIn</Text>
+              </HStack>
+            </Link>
+            <Link href="#" textExternal fontSize="sm">
+              <HStack gap={2}>
+                <Icon as={InstagramLogo} boxSize={4} />
+                <Text>Instagram</Text>
+              </HStack>
+            </Link>
+            <Link href="#" textExternal fontSize="sm">
+              <HStack gap={2}>
+                <Icon as={GlobeSimple} boxSize={4} />
+                <Text>Webseite</Text>
+              </HStack>
+            </Link>
+          </HStack>
+        </VStack>
+      </HStack>
+
+      {/* Mobile Content (unten nach dem Video) */}
+      <VStack
+        gap={6}
+        alignItems="center"
+        w="full"
+        display={{ base: "flex", md: "none" }}
+      >
+        <HStack gap={0.5}>
+          {[1, 2, 3, 4, 5].map((i) => (
+            <Star
+              key={i}
+              size={20}
+              color="var(--chakra-colors-yellow-400)"
+              weight="fill"
+            />
+          ))}
+        </HStack>
+
+        <HStack gap={4} alignItems="center" flexWrap="wrap" justify="center">
+          <Avatar.Root size="lg">
+            <Avatar.Image src={review.avatar} />
+            <Avatar.Fallback name={review.name} />
+          </Avatar.Root>
+          <VStack alignItems="center" gap={0}>
+            <Text fontWeight="bold" fontSize="xl" color="gray.800">
+              {review.name}
+            </Text>
+            <Text fontSize="md" color="gray.600">
+              {review.role}
+            </Text>
+          </VStack>
+        </HStack>
+
+        <Heading
+          as="h3"
+          size="lg"
+          fontWeight="bold"
+          color="gray.800"
+          lineHeight="tight"
+          maxW="full"
+        >
+          {review.mainHeading}
+        </Heading>
+
+        <VStack alignItems="center" gap={3} w="full" mt={-2}>
+          <Heading as="h4" size="md" fontWeight="semibold" color="gray.700">
+            {review.ergebnisseLabel ?? "Seine Ergebnisse"}
+          </Heading>
+          <SimpleGrid
+            columns={1}
+            gap={4}
+            w="full"
+            maxW="full"
+            mx="auto"
+          >
+            {review.successCards.map((card, i) => (
+              <Card.Root
+                key={i}
+                borderRadius="lg"
+                border="1px solid"
+                borderColor={card.borderColor}
+                overflow="hidden"
+                bg={card.bg}
+                backdropFilter="blur(12px)"
+                boxShadow={card.shadow}
+              >
+                <Card.Body textAlign="center" py={3} px={2}>
+                  <VStack gap={0.5}>
+                    <Text
+                      fontSize="3xl"
+                      fontWeight="bold"
+                      color={card.valueColor}
+                      lineHeight="1"
+                    >
+                      {card.value}
+                    </Text>
+                    <Text fontSize="xs" fontWeight="semibold" color={card.labelColor}>
+                      {card.label}
+                    </Text>
+                  </VStack>
+                </Card.Body>
+              </Card.Root>
+            ))}
+          </SimpleGrid>
+          <VStack
+            gap={2}
+            alignItems="center"
+            w="full"
+          >
+            {review.checks.map((line, i) => (
+              <HStack key={i} gap={3} flexWrap="wrap" justify="center">
+                <Icon as={CheckCircle} color="green.500" boxSize={5} />
+                <Text fontSize="sm" color="gray.700" textAlign="center">{line}</Text>
+              </HStack>
+            ))}
+          </VStack>
+        </VStack>
+
+        <VStack alignItems="center" gap={3} w="full">
+          <Heading as="h4" size="md" fontWeight="semibold" color="gray.700">
+            Vorher
+          </Heading>
+          <Text fontSize="md" color="gray.600" lineHeight="tall" textAlign="center" maxW="full">
+            {review.vorher}
+          </Text>
+        </VStack>
+
+        <HStack gap={6} pt={3} flexWrap="wrap" justify="center">
+          <Link href="#" textExternal fontSize="md">
+            <HStack gap={2}>
+              <Icon as={LinkedinLogo} boxSize={5} />
+              <Text>LinkedIn</Text>
+            </HStack>
           </Link>
-          <Link href="#" textExternal fontSize="sm">
-            <Icon as={InstagramLogo} /> Instagram
+          <Link href="#" textExternal fontSize="md">
+            <HStack gap={2}>
+              <Icon as={InstagramLogo} boxSize={5} />
+              <Text>Instagram</Text>
+            </HStack>
           </Link>
-          <Link href="#" textExternal fontSize="sm">
-            <Icon as={GlobeSimple} /> Webseite
+          <Link href="#" textExternal fontSize="md">
+            <HStack gap={2}>
+              <Icon as={GlobeSimple} boxSize={5} />
+              <Text>Webseite</Text>
+            </HStack>
           </Link>
         </HStack>
       </VStack>
@@ -294,24 +520,24 @@ function ReviewCard({
   );
 }
 
-export function CustomerReviewSection() {
+export function CustomerReviewSection({ clientVideoSrcs }: { clientVideoSrcs?: string[] } = {}) {
   return (
-    <Section pt={{ base: 12, md: 16 }} pb={{ base: 12, md: 20 }} bg="gray.50">
-      <VStack gap={0} alignItems="stretch" w="full">
+    <Section pt={{ base: 8, md: 12 }} pb={{ base: 8, md: 16 }} bg="gray.50">
+      <VStack gap={0} alignItems="stretch" w="full" maxW="1200px" mx="auto">
         <Text
-          fontSize="xs"
+          fontSize={{ base: "sm", md: "xs" }}
           fontWeight="bold"
           letterSpacing="wider"
           color="green.600"
           textTransform="uppercase"
           textAlign="center"
-          pb={{ base: 4, md: 6 }}
+          pb={{ base: 6, md: 8 }}
         >
           Kundenstimmen
         </Text>
 
         {reviews.map((review, index) => (
-          <ReviewCard key={index} review={review} index={index} />
+          <ReviewCard key={index} review={review} index={index} clientVideoSrcs={clientVideoSrcs} />
         ))}
       </VStack>
     </Section>

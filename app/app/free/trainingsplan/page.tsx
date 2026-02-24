@@ -28,7 +28,22 @@ import {
 } from "@/components/ui/dialog";
 import { Section } from "@/components/layout/section";
 import { CheckCircle, Plus, Sparkle, ArrowRight, ArrowLeft, X, Trash } from "@phosphor-icons/react";
-import { trainingPlans, type TrainingPlan } from "./data";
+import { useAuth } from "@/components/provider/auth-provider";
+import { useRouter } from "next/navigation";
+
+// Define types for API response (structure optional – Liste liefert nur Metadaten)
+interface TrainingPlan {
+  id: string;
+  slug: string;
+  name: string;
+  gender: string | null;
+  description: string;
+  structure?: {
+    days: {
+      exercises: { name: string }[];
+    }[];
+  };
+}
 
 interface QuizAnswers {
   fitnessLevel: string;
@@ -107,6 +122,9 @@ const recommendPlan = (answers: QuizAnswers): string => {
 };
 
 export default function Trainingsplan() {
+  const { getAccessToken } = useAuth();
+  const router = useRouter();
+  const [trainingPlans, setTrainingPlans] = useState<TrainingPlan[]>([]);
   const [selectedPlans, setSelectedPlans] = useState<string[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -118,38 +136,96 @@ export default function Trainingsplan() {
     focus: "",
   });
   const [recommendedPlanId, setRecommendedPlanId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [assigning, setAssigning] = useState(false);
 
-  const handleAddPlan = (planId: string) => {
-    if (!selectedPlans.includes(planId)) {
-      const newPlans = [...selectedPlans, planId];
-      setSelectedPlans(newPlans);
-      // Speichere in localStorage
-      localStorage.setItem("assignedTrainingPlans", JSON.stringify(newPlans));
+  const handleAddPlan = async (planId: string) => {
+    if (selectedPlans.includes(planId)) return;
+
+    const token = getAccessToken();
+    if (!token) {
+      alert("Bitte melden Sie sich an, um einen Trainingsplan zuzuweisen.");
+      return;
+    }
+
+    setAssigning(true);
+    try {
+      const response = await fetch("/api/training-plans/assign", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ planId }),
+      });
+
+      if (response.ok) {
+        setSelectedPlans([planId]); // Nur ein Plan pro Nutzer
+        alert("Trainingsplan erfolgreich zugewiesen!");
+      } else {
+        const error = await response.json();
+        alert(`Fehler: ${error.error}`);
+      }
+    } catch (error) {
+      console.error("Error assigning plan:", error);
+      alert("Fehler beim Zuweisen des Plans");
+    } finally {
+      setAssigning(false);
     }
   };
 
-  const handleRemovePlan = (planId: string) => {
-    const newPlans = selectedPlans.filter((id) => id !== planId);
-    setSelectedPlans(newPlans);
-    // Speichere in localStorage
-    localStorage.setItem("assignedTrainingPlans", JSON.stringify(newPlans));
+  const handleRemovePlan = async (planId: string) => {
+    // For now, just remove from UI - to properly remove, we'd need a DELETE endpoint
+    // Since we only support one plan per user, removing means no plan assigned
+    setSelectedPlans([]);
   };
 
-  const handleResetAll = () => {
-    if (confirm("Möchtest du wirklich alle Trainingspläne zurücksetzen? Alle zugewiesenen Pläne und Trainingstage werden gelöscht.")) {
+  const handleResetAll = async () => {
+    if (confirm("Möchtest du wirklich deinen Trainingsplan zurücksetzen?")) {
+      // For now, just reset UI - to properly remove, we'd need a DELETE endpoint
       setSelectedPlans([]);
-      localStorage.removeItem("assignedTrainingPlans");
-      localStorage.removeItem("myTrainingDays");
     }
   };
 
-  // Lade zugewiesene Pläne beim Mount
+  // Lade Trainingspläne von API
   useEffect(() => {
-    const stored = localStorage.getItem("assignedTrainingPlans");
-    if (stored) {
-      setSelectedPlans(JSON.parse(stored));
+    const token = getAccessToken();
+    if (!token) {
+      setLoading(false);
+      return;
     }
-  }, []);
+
+    // Lade verfügbare Pläne (öffentlich)
+    fetch("/api/training-plans")
+      .then((res) => res.json())
+      .then((data) => {
+        setTrainingPlans(data.plans || []);
+      })
+      .catch((error) => {
+        console.error("Error loading training plans:", error);
+      });
+
+    // Lade zugewiesenen Plan vom Nutzer
+    fetch("/api/training-plans/my", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return { plan: null };
+      })
+      .then((data) => {
+        if (data.plan) {
+          setSelectedPlans([data.plan.id]);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error loading user's plan:", error);
+        setLoading(false);
+      });
+  }, [getAccessToken]);
 
   const isPlanSelected = (planId: string) => selectedPlans.includes(planId);
 
@@ -206,6 +282,108 @@ export default function Trainingsplan() {
   const canProceed = currentAnswer !== "";
 
   const recommendedPlan = recommendedPlanId ? trainingPlans.find((p) => p.id === recommendedPlanId) : null;
+
+  const plansFemale = trainingPlans.filter((p) => p.gender === "female");
+  const plansMale = trainingPlans.filter((p) => p.gender === "male");
+
+  const PlanCard = ({
+    plan,
+    colorPalette,
+    borderColor,
+    hoverBorderColor,
+    hoverShadow,
+    badgeColorPalette,
+    descriptionColor,
+    linkColor,
+    isRecommended,
+  }: {
+    plan: TrainingPlan;
+    colorPalette: string;
+    borderColor: string;
+    hoverBorderColor: string;
+    hoverShadow: string;
+    badgeColorPalette: string;
+    descriptionColor: string;
+    linkColor: string;
+    isRecommended: boolean;
+  }) => (
+    <Card.Root
+      key={plan.id}
+      position="relative"
+      cursor="pointer"
+      bg={`${colorPalette}.50`}
+      borderColor={isRecommended ? `${colorPalette}.500` : borderColor}
+      borderWidth={isRecommended ? "2px" : "1px"}
+      onClick={() => router.push(`/app/free/trainingsplan/${plan.id}`)}
+      _hover={{
+        borderColor: hoverBorderColor,
+        boxShadow: hoverShadow,
+        transform: "translateY(-2px)",
+      }}
+      transition="all 0.2s"
+    >
+      {isRecommended && (
+        <Badge
+          position="absolute"
+          top="4"
+          right="4"
+          colorPalette={badgeColorPalette}
+          variant="solid"
+          zIndex="1"
+        >
+          Empfohlen
+        </Badge>
+      )}
+
+      <Card.Body>
+        <Stack gap="4">
+          <Stack gap="2">
+            <Card.Title color={`${colorPalette}.800`}>{plan.name}</Card.Title>
+            <Card.Description color={descriptionColor}>
+              {plan.description}
+            </Card.Description>
+          </Stack>
+
+          <Stack gap="3">
+            <Text fontSize="sm" fontWeight="medium" color={`${colorPalette}.800`}>
+              {plan.structure?.days?.length
+                ? `Enthält ${plan.structure.days.length} Trainingstage mit insgesamt ${plan.structure.days.reduce((total: number, day: { exercises: unknown[] }) => total + day.exercises.length, 0)} Übungen`
+                : "Vollständiger Trainingsplan mit allen Übungen"}
+            </Text>
+
+            <Text fontSize="sm" color={linkColor} fontWeight="medium">
+              Klicke für detaillierte Ansicht →
+            </Text>
+          </Stack>
+
+          <Button
+            colorPalette={isPlanSelected(plan.id) ? "red" : colorPalette}
+            variant="outline"
+            onClick={(e) => {
+              e.stopPropagation();
+              isPlanSelected(plan.id)
+                ? handleRemovePlan(plan.id)
+                : handleAddPlan(plan.id);
+            }}
+          >
+            <HStack gap="2">
+              {isPlanSelected(plan.id) ? (
+                <>
+                  <X size={20} />
+                  <Text>Entfernen</Text>
+                </>
+              ) : (
+                <>
+                  <Plus size={20} />
+                  <Text>Zum Plan hinzufügen</Text>
+                </>
+              )}
+            </HStack>
+          </Button>
+        </Stack>
+      </Card.Body>
+    </Card.Root>
+  );
 
   return (
     <Section header>
@@ -270,100 +448,57 @@ export default function Trainingsplan() {
           </Card.Body>
         </Card.Root>
 
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap="6">
-          <For each={trainingPlans}>
-            {(plan) => (
-              <Card.Root
-                key={plan.id}
-                position="relative"
-                borderColor={plan.recommended ? "green.500" : "border.emphasized"}
-                borderWidth={plan.recommended ? "2px" : "1px"}
-                _hover={{
-                  borderColor: "green.400",
-                  boxShadow: "0 8px 24px -4px rgba(34, 197, 94, 0.2)",
-                }}
-                transition="all 0.2s"
-              >
-                {plan.recommended && (
-                  <Badge
-                    position="absolute"
-                    top="4"
-                    right="4"
-                    colorPalette="green"
-                    variant="solid"
-                    zIndex="1"
-                  >
-                    Empfohlen
-                  </Badge>
+        {/* Pläne für Frauen – Pink */}
+        {plansFemale.length > 0 && (
+          <Stack gap="4">
+            <Heading size="md" color="pink.700">
+              Pläne für Frauen
+            </Heading>
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap="6">
+              <For each={plansFemale}>
+                {(plan) => (
+                  <PlanCard
+                    plan={plan}
+                    colorPalette="pink"
+                    borderColor="pink.200"
+                    hoverBorderColor="pink.400"
+                    hoverShadow="0 8px 24px -4px rgba(236, 72, 153, 0.25)"
+                    badgeColorPalette="pink"
+                    descriptionColor="pink.700"
+                    linkColor="pink.600"
+                    isRecommended={plan.slug === "ok-uk-frau"}
+                  />
                 )}
+              </For>
+            </SimpleGrid>
+          </Stack>
+        )}
 
-                <Card.Body>
-                  <Stack gap="4">
-                    <Stack gap="2">
-                      <Card.Title>{plan.title}</Card.Title>
-                      <Card.Description color="green.700">
-                        {plan.description}
-                      </Card.Description>
-                    </Stack>
-
-                    <Stack gap="2" direction="row" flexWrap="wrap">
-                      <Badge colorPalette="green" variant="subtle">
-                        {plan.duration}
-                      </Badge>
-                      <Badge colorPalette="gray" variant="subtle">
-                        {plan.difficulty}
-                      </Badge>
-                    </Stack>
-
-                    <Stack gap="3">
-                      <Text fontSize="sm" fontWeight="medium" color="green.800">
-                        Übungen:
-                      </Text>
-                      <List.Root variant="plain" gap="2">
-                        <For each={plan.exercises}>
-                          {(exercise) => (
-                            <List.Item key={exercise}>
-                              <List.Indicator color="green.500">
-                                <CheckCircle size={16} weight="fill" />
-                              </List.Indicator>
-                              <Text fontSize="sm" color="green.700">
-                                {exercise}
-                              </Text>
-                            </List.Item>
-                          )}
-                        </For>
-                      </List.Root>
-                    </Stack>
-
-                    <Button
-                      colorPalette={isPlanSelected(plan.id) ? "red" : "green"}
-                      variant="outline"
-                      onClick={() => 
-                        isPlanSelected(plan.id) 
-                          ? handleRemovePlan(plan.id) 
-                          : handleAddPlan(plan.id)
-                      }
-                    >
-                      <HStack gap="2">
-                        {isPlanSelected(plan.id) ? (
-                          <>
-                            <X size={20} />
-                            <Text>Entfernen</Text>
-                          </>
-                        ) : (
-                          <>
-                            <Plus size={20} />
-                            <Text>Zum Plan hinzufügen</Text>
-                          </>
-                        )}
-                      </HStack>
-                    </Button>
-                  </Stack>
-                </Card.Body>
-              </Card.Root>
-            )}
-          </For>
-        </SimpleGrid>
+        {/* Pläne für Männer – Blau */}
+        {plansMale.length > 0 && (
+          <Stack gap="4">
+            <Heading size="md" color="blue.700">
+              Pläne für Männer
+            </Heading>
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap="6">
+              <For each={plansMale}>
+                {(plan) => (
+                  <PlanCard
+                    plan={plan}
+                    colorPalette="blue"
+                    borderColor="blue.200"
+                    hoverBorderColor="blue.400"
+                    hoverShadow="0 8px 24px -4px rgba(59, 130, 246, 0.25)"
+                    badgeColorPalette="blue"
+                    descriptionColor="blue.700"
+                    linkColor="blue.600"
+                    isRecommended={plan.slug === "ok-uk-mann"}
+                  />
+                )}
+              </For>
+            </SimpleGrid>
+          </Stack>
+        )}
 
         {/* Quiz Dialog */}
         <DialogRoot open={isDialogOpen} onOpenChange={(e) => !e.open && handleCloseDialog()}>
